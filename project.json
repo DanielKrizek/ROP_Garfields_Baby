@@ -1,5 +1,5 @@
 {
-  "name": "org",
+  "name": "ROP_Garfields_Baby",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "includedScripts": [],
   "sourceRoot": "./src",
