@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   height="543.8374"
+   width="801.01654"
+   version="1.1"
+   id="Layer_1"
+   viewBox="0 0 512.65059 348.05594"
+   xml:space="preserve"
+   sodipodi:docname="united-kingdom-uk-svgrepo-com.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs6" /><sodipodi:namedview
+   id="namedview6"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="0.98375"
+   inkscape:cx="506.73443"
+   inkscape:cy="341.04193"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<path
+   style="fill:#41479b;stroke-width:1.02016"
+   d="M 473.655,-0.20172304 H 38.345 C 17.167,-0.20172304 0,17.664444 0,39.704974 V 309.00255 c 0,22.03948 17.167,39.90669 38.345,39.90669 h 435.31 c 21.177,0 38.345,-17.86617 38.345,-39.90669 V 39.704974 c 0,-22.04053 -17.167,-39.90669704 -38.345,-39.90669704 z"
+   id="path1" />
+<path
+   style="fill:#f5f5f5;stroke-width:1.02016"
+   d="M 511.469,33.107794 C 508.447,14.209229 492.672,-0.20276404 473.655,-0.20276404 h -9.977 L 300.138,111.30805 V -0.20172304 H 211.862 V 111.30909 L 48.322,-0.20172304 h -9.977 c -19.017,0 -34.792,14.41095204 -37.814,33.31056704 L 140.309,128.41865 H 0 V 220.2899 H 140.309 L 0.531,315.59764 c 3.022,18.89857 18.797,33.31056 37.814,33.31056 h 9.977 L 211.862,237.39738 V 348.9082 h 88.276 V 237.39738 l 163.54,111.51082 h 9.977 c 19.017,0 34.792,-14.41095 37.814,-33.31056 L 371.691,220.28782 H 512 V 128.41657 H 371.691 Z"
+   id="path2" />
+<g
+   id="g6"
+   transform="matrix(1,0,0,1.0407274,0,-92.072975)">
+	<polygon
+   style="fill:#ff4b55"
+   points="229.517,282.483 229.517,423.724 282.483,423.724 282.483,282.483 512,282.483 512,229.517 282.483,229.517 282.483,88.276 229.517,88.276 229.517,229.517 0,229.517 0,282.483 "
+   id="polygon2" />
+	<path
+   style="fill:#ff4b55"
+   d="M 24.793,421.252 211.376,300.138 H 178.948 L 9.224,410.31 c 4.153,4.847 9.49,8.645 15.569,10.942 z"
+   id="path3" />
+	<path
+   style="fill:#ff4b55"
+   d="M 346.388,300.138 H 313.96 l 180.716,117.305 c 5.057,-3.321 9.277,-7.807 12.287,-13.075 z"
+   id="path4" />
+	<path
+   style="fill:#ff4b55"
+   d="m 4.049,109.475 157.73,102.387 h 32.428 L 15.475,95.842 c -4.799,3.572 -8.726,8.242 -11.426,13.633 z"
+   id="path5" />
+	<path
+   style="fill:#ff4b55"
+   d="M 332.566,211.862 502.601,101.487 c -4.199,-4.831 -9.578,-8.607 -15.699,-10.86 L 300.138,211.862 Z"
+   id="path6" />
+</g>
+</svg>

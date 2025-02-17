@@ -1,0 +1,59 @@
+ .dsadnavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  background-color: #f7b5ca;
+  height: 90px;
+  z-index: 1;
+  font-weight: bold;
+  width: 100%;
+}
+
+@media screen and (max-width: 2160px) {
+  .navbar {
+    height: 5px;
+  }
+}
+
+.links-left,
+.links-right {
+  display: flex;
+  gap: 10px;
+  margin: 0 10px 0 10px;
+  -webkit-text-stroke: 0.7px black;
+  align-items: center;
+}
+
+.navbar .links-left a,
+.navbar .links-right a {
+  text-shadow: 2px 2px 5px black;
+  -webkit-text-stroke: 0.7px black;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 40px;
+  z-index: 1;
+}
+
+.navbar .flag {
+  height: 46.4px;
+  width: 60px;
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+  margin: 0 10px;
+}
+
+
+.background-circle {
+  position: absolute;
+  margin-top: 100px;
+  height: 250px;
+  width: 250px;
+  z-index: 1;
+}
+
+.logo {
+  margin-top: 120px;
+  height: 210px;
+  width: 210px;
+  z-index: 2;
+}
