@@ -282,6 +282,8 @@ select
     font-weight: 500;
 }
 
+
+
 @media (max-width: 950px) {
     .navbar :is(.hamburger-btn, .close-btn) {
         display: block;
