@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <title>Garfields Baby</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
     <link rel="stylesheet" href="styles/Header.css">
-    <link rel="stylesheet" href="styles/body.css">
+    <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/main.css">
     <script src="js/hamburger.js" defer></script>
     <script src="js/script.js" defer></script>
 </head>
@@ -111,6 +112,36 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
         </div>
     </div>
+
+    <main>
+        <!-- Textový popis stanice -->
+        <section class="description">
+            <h1>Vítáme vás na stránkách naší chovatelské stanice.</h1>
+            <p> Jsme chovatelská stanice sídlící ve Zbožíčku poblíž Benátek nad Jizerou. Všechny naše kočky a kocouři žijí v dokonalém souladu se psy. Mají možnost trávit volný čas venku i v domě díky zabezpečenému venkovnímu výběhu. Kdykoli chtějí, honí se v trávě, lezou po stromech nebo se vyhřívají na sluníčku. Po celý den mají k dospozici kvalitními superprémiové granulky Royal Canin a rádi si pochutnají i na jiných kočičích pochoutkách, kapsičkách, šunce, syrovém hovězím mase.</p>
+        </section>
+
+        <!-- Hlavní obrázek s tlačítkem -->
+        <section class="hero">
+            <img src="img/kocka_dlouha.jpg" alt="Hlavní obrázek">
+            <a href="dalsi-stranka.html" class="btn">Pro zájemce</a>
+        </section>
+
+        <!-- Tři menší obrázky s odkazy -->
+        <section class="info-section">
+            <div class="info-box">
+                <img src="img/kote.jpg" alt="Koťata">
+                <a href="kotata.html" class="info-btn">Prohlédněte si naše koťata</a>
+            </div>
+            <div class="info-box">
+                <img src="img/kocka2.jpg" alt="Kočky">
+                <a href="kocky.html" class="info-btn">Prohlédněte si naše kočky</a>
+            </div>
+            <div class="info-box">
+                <img src="img/kocour.jpg" alt="Kocouři">
+                <a href="kocouri.html" class="info-btn">Prohlédněte si naše kocoury</a>
+            </div>
+        </section>
+    </main>
 
     <script src="js/script.js"></script>
 </body>
