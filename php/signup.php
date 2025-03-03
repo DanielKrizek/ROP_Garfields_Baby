@@ -6,7 +6,12 @@ include("functions.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $message = signup($conn, $username, $password);
+
+    if (strlen($password) < 4) {
+        $message = "Password must be at least 4 characters long.";
+    } else {
+        $message = signup($conn, $username, $password);
+    }
 }
 ?>
 

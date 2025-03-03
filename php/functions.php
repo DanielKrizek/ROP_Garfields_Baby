@@ -24,7 +24,7 @@ function login($conn, $username, $password)
         if (password_verify($password, $user_data['password'])) {
             $_SESSION['user_id'] = $user_data['user_id'];
             $_SESSION['username'] = $user_data['username'];
-            echo "<script>alert('Přihlášení proběhlo úspěšně');</script>";
+
             echo "<script>window.location.href = 'index.php';</script>";
             die;
         }
@@ -48,7 +48,7 @@ function signup($conn, $username, $password)
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $query = "insert into users (username, password) values ('$username', '$hashed_password')";
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Registrace proběhla úspěšně');</script>";
+        echo "<script>alert('Registrace proběhla úspěšně, můžete se nyní přihlásit.');</script>";
         echo "<script>window.location.href = window.location.href;</script>";
         return;
     }

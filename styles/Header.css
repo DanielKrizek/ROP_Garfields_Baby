@@ -8,12 +8,6 @@
     font-family: "Open Sans", sans-serif;
 }
 
-body {
-    height: 100vh;
-    width: 100%;
-    background-color: #FFACC7;
-}
-
 header {
     position: fixed;
     width: 100%;
@@ -73,7 +67,7 @@ header {
 
 .navbar .links {
     display: flex;
-    gap: 30px;
+    gap: 20px;
     list-style: none;
     align-items: center;
 }

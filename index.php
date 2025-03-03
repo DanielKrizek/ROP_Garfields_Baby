@@ -25,11 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garfields Baby</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/Header.css">
     <link rel="stylesheet" href="styles/login.css">
     <link rel="stylesheet" href="styles/main.css">
     <script src="js/hamburger.js" defer></script>
     <script src="js/script.js" defer></script>
+    <style>
+        body {
+            padding-top: 60px;
+            /* Adjust this value based on the height of your navbar */
+        }
+    </style>
 </head>
 
 <body>
@@ -44,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <div class="navbar-right">
                 <ul class="links">
                     <span class="close-btn material-symbols-rounded">close</span>
-                    <li><a id="navbar1" href="#">Kočky</a></li>
-                    <li><a id="navbar2" href="#">Koťata</a></li>
-                    <li><a id="navbar3" href="#">Kocouři</a></li>
+                    <li><a id="navbar1" href="pages/kocky.php">Kočky</a></li>
+                    <li><a id="navbar2" href="pages/kotata.php">Koťata</a></li>
+                    <li><a id="navbar3" href="pages/kocouri.php">Kocouři</a></li>
                     <li><a id="navbar4" href="#">Kastráti</a></li>
                     <li><a id="navbar5" href="#">Plán</a></li>
                     <li><a id="navbar6" href="#">Fotogalerie</a></li>
@@ -114,31 +121,28 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     </div>
 
     <main>
-        <!-- Textový popis stanice -->
         <section class="description">
             <h1>Vítáme vás na stránkách naší chovatelské stanice.</h1>
             <p> Jsme chovatelská stanice sídlící ve Zbožíčku poblíž Benátek nad Jizerou. Všechny naše kočky a kocouři žijí v dokonalém souladu se psy. Mají možnost trávit volný čas venku i v domě díky zabezpečenému venkovnímu výběhu. Kdykoli chtějí, honí se v trávě, lezou po stromech nebo se vyhřívají na sluníčku. Po celý den mají k dospozici kvalitními superprémiové granulky Royal Canin a rádi si pochutnají i na jiných kočičích pochoutkách, kapsičkách, šunce, syrovém hovězím mase.</p>
         </section>
 
-        <!-- Hlavní obrázek s tlačítkem -->
         <section class="hero">
             <img src="img/kocka_dlouha.jpg" alt="Hlavní obrázek">
-            <a href="dalsi-stranka.html" class="btn">Pro zájemce</a>
+            <a href="info.php" class="btn">Pro zájemce</a>
         </section>
 
-        <!-- Tři menší obrázky s odkazy -->
         <section class="info-section">
             <div class="info-box">
                 <img src="img/kote.jpg" alt="Koťata">
-                <a href="kotata.html" class="info-btn">Prohlédněte si naše koťata</a>
+                <a href="pages/kotata.php" class="info-btn">Prohlédněte si naše koťata</a>
             </div>
             <div class="info-box">
                 <img src="img/kocka2.jpg" alt="Kočky">
-                <a href="kocky.html" class="info-btn">Prohlédněte si naše kočky</a>
+                <a href="pages/kocky.php" class="info-btn">Prohlédněte si naše kočky</a>
             </div>
             <div class="info-box">
                 <img src="img/kocour.jpg" alt="Kocouři">
-                <a href="kocouri.html" class="info-btn">Prohlédněte si naše kocoury</a>
+                <a href="pages/kocouri.php" class="info-btn">Prohlédněte si naše kocoury</a>
             </div>
         </section>
     </main>

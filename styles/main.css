@@ -1,8 +1,9 @@
 .hero {
     position: relative;
     width: 100%;
-    max-width: 1180px;
-    margin: auto;
+    max-width: 1165px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .hero img {
@@ -27,6 +28,7 @@
 .info-section {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 20px;
     margin: 20px 0;
 }
@@ -59,9 +61,10 @@
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
-    max-width: 1200px; 
+    width: 100%;
+    max-width: 1165px;
     position: relative;
-    z-index: 1; /* Ensure it is above other elements */
+    z-index: 1;
 }
 
 .description h1 {
@@ -72,9 +75,5 @@
 .description p {
     font-size: 1.2em;
     line-height: 1.5;
-}
-
-main {
-    margin-top: 23%; /* Default margin for larger screens */
 }
 
