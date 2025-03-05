@@ -1,5 +1,5 @@
 <?php
-$current_page = basename($_SERVER['PHP_SELF']); // Získá aktuální název souboru
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <nav class="navbar">
@@ -12,25 +12,33 @@ $current_page = basename($_SERVER['PHP_SELF']); // Získá aktuální název sou
     <div class="navbar-right">
         <ul class="links">
             <span class="close-btn material-symbols-rounded">close</span>
-            <li><a id="navbar1" href="kocky.php" class="<?= ($current_page == 'kocky.php') ? 'active' : '' ?>">Kočky</a></li>
-            <li><a id="navbar2" href="kotata.php" class="<?= ($current_page == 'kotata.php') ? 'active' : '' ?>">Koťata</a></li>
-            <li><a id="navbar3" href="kocouri.php" class="<?= ($current_page == 'kocouri.php') ? 'active' : '' ?>">Kocouři</a></li>
-            <li><a id="navbar4" href="#" class="<?= ($current_page == 'kastrati.php') ? 'active' : '' ?>">Kastráti</a></li>
-            <li><a id="navbar5" href="#" class="<?= ($current_page == 'plan.php') ? 'active' : '' ?>">Plán</a></li>
-            <li><a id="navbar6" href="#" class="<?= ($current_page == 'fotogalerie.php') ? 'active' : '' ?>">Fotogalerie</a></li>
-            <li><a id="navbar7" href="#" class="<?= ($current_page == 'odchovy.php') ? 'active' : '' ?>">Odchovy</a></li>
-            <li><a id="navbar8" href="#" class="<?= ($current_page == 'novinky.php') ? 'active' : '' ?>">Novinky</a></li>
+            <li><a id="navbar1" href="kocky.php"><?php echo translate('cats'); ?></a></li>
+            <li><a id="navbar2" href="kotata.php"><?php echo translate('kittens'); ?></a></li>
+            <li><a id="navbar3" href="kocouri.php"><?php echo translate('toms'); ?></a></li>
+            <li><a id="navbar4" href="#"><?php echo translate('neuters'); ?></a></li>
+            <li><a id="navbar5" href="#"><?php echo translate('plan'); ?></a></li>
+            <li><a id="navbar6" href="#"><?php echo translate('gallery'); ?></a></li>
+            <li><a id="navbar7" href="#"><?php echo translate('offspring'); ?></a></li>
+            <li><a id="navbar8" href="#"><?php echo translate('news'); ?></a></li>
         </ul>
 
         <?php if (isset($_SESSION['username'])): ?>
-            <a href="../php/logout.php" class="logout-btn">Jste přihlášen, <?php echo $_SESSION['username']; ?>!</a>
+            <div class="dropdown">
+                <button class="logout-btn"><?php echo translate('logged_in') . $_SESSION['username']; ?>!</button>
+                <div class="dropdown-content">
+                    <a href="#"><?php echo translate('profile'); ?></a> <!-- Replace with actual link -->
+                    <a href="php/logout.php" class="logout-link"><?php echo translate('logout'); ?></a>
+                </div>
+            </div>
         <?php else: ?>
-            <button id="login" class="login-btn">PŘIHLÁSIT</button>
+            <button id="login" class="login-btn"><?php echo translate('login'); ?></button>
         <?php endif; ?>
 
-        <select name="" id="lang-select">
-            <option value="cz">Čeština</option>
-            <option value="en">English</option>
-        </select>
+        <form method="post">
+            <select name="lang-select" id="lang-select" onchange="this.form.submit()">
+                <option value="cz" <?php echo (isset($_SESSION['lang']) && $_SESSION['lang'] == 'cz') ? 'selected' : ''; ?>>Čeština</option>
+                <option value="en" <?php echo (isset($_SESSION['lang']) && $_SESSION['lang'] == 'en') ? 'selected' : ''; ?>>English</option>
+            </select>
+        </form>
     </div>
 </nav>

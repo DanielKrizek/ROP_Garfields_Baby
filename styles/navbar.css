@@ -101,6 +101,7 @@ header {
     border-radius: 3px;
     cursor: pointer;
     transition: 0.15s ease;
+    width: auto;
 }
 
 .navbar .login-btn:hover {

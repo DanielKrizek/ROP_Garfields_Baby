@@ -13,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $username = $_POST['username'];
         $password = $_POST['password'];
         $message = signup($conn, $username, $password);
+    } elseif (isset($_POST['lang-select'])) {
+        $_SESSION['lang'] = $_POST['lang-select'];
     }
 }
 ?>
@@ -29,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/Header.css">
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
 
