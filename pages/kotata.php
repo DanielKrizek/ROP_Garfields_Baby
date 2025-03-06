@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/grid.css">
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
 
@@ -42,50 +43,159 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <?php include("navbar.php"); ?>
     </header>
 
-    <div class="blur-bg-overlay"></div>
-    <div class="form-popup">
-        <span class="close-btn material-symbols-rounded">close</span>
-        <div class="form-box login">
-            <div class="form-content">
-                <h2 id="login-text1">PŘIHLÁSIT SE</h2>
-                <form method="post">
-                    <div class="input-field">
-                        <input type="text" name="username" required>
-                        <label id="type-email1">Zadej uživatelské jméno</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" required>
-                        <label id="type-passw1">Zadej heslo</label>
-                    </div>
-                    <button id="loginBtn1" type="submit" name="login">Přihlásit se</button>
-                </form>
-                <div id="bottom1" class="bottom-link">
-                    Ještě nejsi zaregistrovaný?
-                    <a href="#" id="signup-link">Zaregistrovat se</a>
-                </div>
+    <?php include("logForm.php"); ?>
+
+
+    <div class="blocks-row">
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>ZUCCHERO A LYNX STAR</strong><br>
+                19. 8. 2018<br>
+                černá stříbřitá mramorovaná s bílou<br> (ns 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: Pillowtalk's Michigan<br>
+                Matka: Katherine Kerry A Lynx Star<br>
             </div>
         </div>
-        <div class="form-box signup">
-            <div class="form-content">
-                <h2 id="login-text2">ZAREGISTROVAT SE</h2>
-                <form method="post">
-                    <div class="input-field">
-                        <input type="text" name="username" required>
-                        <label id="type-email2">Zadej uživatelské jméno</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" required>
-                        <label id="type-passw2">Zadej heslo</label>
-                    </div>
-                    <button id="loginBtn2" type="submit" name="signup">Zaregistrovat se</button>
-                </form>
-                <div id="bottom2" class="bottom-link">
-                    Už máš účet?
-                    <a href="#" id="login-link">Přihlásit se</a>
-                </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>LOKI BLUE LAGUNA LEO</strong><br>
+                27. 5. 2016<br>
+                modrá s bílou<br> (a 09)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: ICH (WCF) Flip-Flop's Focus<br>
+                Matka: Marilyn Laguna Leo<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>LUKAS BACCARACOON</strong><br>
+                7. 9. 2013<br>
+                červená stříbřitá mramorovaná s bílou<br> (ds 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: ICH Fuzzy, Lavender Love<br>
+                Matka: Kalista Violet, Velvet Duckie<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>QUEENY BELLA A LYNX STAR</strong><br>
+                20. 1. 2016<br>
+                modrá mramorovaná s bílou<br> (a 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Marylin Hairy Majesty<br>
+                Otec: Pillowtalk's Wannabe<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>ELLEN A LYNX STAR</strong><br>
+                4. 10. 2011<br>
+                černě želvovinová mramorovaná<br> (f 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Harmony Garfield's Baby<br>
+                Otec: Centaur Garfield's Baby<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>REBEKA GARFIELD'S BABY</strong><br>
+                6. 1. 2012<br>
+                černě želvovinová tečkovaná s bílou<br> (f 09 24)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: CH Embee Garfield's Baby<br>
+                Otec: CH Zeus Sante d'Orsy<br>
+                <strong>Výstavy:</strong><br> ~ tř. 11 ~<br>
+                MVK Lysá nad Labem 24.11.2012 - V3<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>MAUGLINA GARFIELD'S BABY</strong><br>
+                23. 7. 2011<br>
+                černá s bílou (n 09)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: CH Embee Garfield's Baby<br>
+                Otec: CH Alwaro King of Jewel<br>
+                <strong>Výstavy:</strong><br> ~ tř. 9 ~<br>
+                MVK Příbram 10.6.2012 - CAC<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>CHOPPER GARFIELD'S BABY</strong><br>
+                14. 9. 2015<br>
+                černá stříbřitá mramorovaná s bílou<br> (ns 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: Lukas Baccaracoon<br>
+                Matka: Ornela Garfield's Baby<br>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

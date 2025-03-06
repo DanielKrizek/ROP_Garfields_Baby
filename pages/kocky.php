@@ -32,55 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/grid.css">
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
-
-    <style>
-        body {
-            overflow-y: scroll;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            top: 50px
-        }
-
-        .blocks-row {
-            width: 100%;
-            margin-left: 0;
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .block {
-            width: calc(33.333% - 20px);
-            margin-top: 20px;
-            margin-left: 10px;
-            margin-right: 10px;
-            background: #333;
-            height: 400px;
-            flex-shrink: 0;
-        }
-
-        @media only screen and (max-width: 1366px) {
-            .block {
-                width: calc(33.333% - 20px);
-            }
-        }
-
-        @media only screen and (max-width: 768px) {
-            .block {
-                width: calc(50% - 20px);
-            }
-        }
-
-        @media only screen and (max-width: 576px) {
-            .block {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -88,65 +42,240 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <?php include("navbar.php"); ?>
     </header>
 
-    <div class="blur-bg-overlay"></div>
-    <div class="form-popup">
-        <span class="close-btn material-symbols-rounded">close</span>
-        <div class="form-box login">
-            <div class="form-content">
-                <h2 id="login-text1">PŘIHLÁSIT SE</h2>
-                <form method="post">
-                    <div class="input-field">
-                        <input type="text" name="username" required>
-                        <label id="type-email1">Zadej uživatelské jméno</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" required>
-                        <label id="type-passw1">Zadej heslo</label>
-                    </div>
-                    <button id="loginBtn1" type="submit" name="login">Přihlásit se</button>
-                </form>
-                <div id="bottom1" class="bottom-link">
-                    Ještě nejsi zaregistrovaný?
-                    <a href="#" id="signup-link">Zaregistrovat se</a>
-                </div>
-            </div>
-        </div>
-        <div class="form-box signup">
-            <div class="form-content">
-                <h2 id="login-text2">ZAREGISTROVAT SE</h2>
-                <form method="post">
-                    <div class="input-field">
-                        <input type="text" name="username" required>
-                        <label id="type-email2">Zadej uživatelské jméno</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" required>
-                        <label id="type-passw2">Zadej heslo</label>
-                    </div>
-                    <button id="loginBtn2" type="submit" name="signup">Zaregistrovat se</button>
-                </form>
-                <div id="bottom2" class="bottom-link">
-                    Už máš účet?
-                    <a href="#" id="login-link">Přihlásit se</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <?php include("logForm.php"); ?>
 
     <div class="blocks-row">
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>OMARION QUEEN OF DAN</strong><br>
+                6. 11. 2021<br>
+                černě želvovinová stříbřitá mramorovaná<br> (fs 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Solaris of CaDazz<br>
+                Otec: Hope Queen of Dan<br>
+            </div>
+        </div>
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>OLIVIA GARFIELD'S BABY</strong><br>
+                25. 5. 2021<br>
+                černě želvovinová stříbřitá tygrovaná<br> (fs 23)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Rebeka Garfield's Baby<br>
+                Otec: HoneyDevil Nectarine<br>
+            </div>
+        </div>
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>ANGELA GARFIELD'S BABY</strong><br>
+                22. 11. 2019<br>
+                černá stříbřitá tečkovaná bikolor<br> (ns 03 24)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Kisha Garfield's Baby<br>
+                Otec: Zuchero A Lynx Star<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>QUELLA GARFIELD'S BABY</strong><br>
+                14. 3. 2019<br>
+                černě želvovinová stříbřitá mramorovaná<br> (fs 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Mauglina Garfield's Baby<br>
+                Otec: Lukas Baccaracoon<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>RACHEL GARFIELD'S BABY</strong><br>
+                11. 4. 2019<br>
+                modře želvovinová stříbřitá mramorovaná s bílou<br> (gs 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Cassandra Garfield's Baby<br>
+                Otec: Lukas Baccaracoon<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>HANY GARFIELD'S BABY</strong><br>
+                5. 7. 2018<br>
+                černá s bílou<br> (n 09)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Happy Agostino<br>
+                Otec: Loki Blue Laguna Leo<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>KATELYNN GARFIELD'S BABY</strong><br>
+                18. 8. 2018<br>
+                černě želvovinová<br> (f)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Kamey Garfield's Baby<br>
+                Otec: Loki Blue Laguna Leo<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>CASSANDRA GARFIELD'S BABY</strong><br>
+                6. 12. 2017<br>
+                černě želvovinová mramorovaná<br> (f 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Kisha Garfield's Baby<br>
+                Otec: Loki Blue Laguna Leo<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>DEBBIE GARFIELD'S BABY</strong><br>
+                10. 2. 2018<br>
+                modrá mramorovaná<br> (a 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Queeny Bella A Lynx Star<br>
+                Otec: Loki Blue Laguna Leo<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>KAMEY GARFIELD'S BABY</strong><br>
+                5. 1. 2016<br>
+                černě želvovinová stříbřitá mramorovaná s bílou<br> (fs 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Rebeka Garfield's Baby<br>
+                Otec: Lukas Baccaracoon<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>PADY GARFIELD'S BABY</strong><br>
+                21. 9. 2016<br>
+                modrá stříbřitá mramorovaná s bílou<br> (as 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Rebeka Garfield's Baby<br>
+                Otec: Chopper Garfield's Baby<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>HAPPY AGOSTINO</strong><br>
+                1. 8. 2016<br>
+                černě želvovinová mramorovaná s bílou<br> (f 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: IC Arnika of Pumelia Garden<br>
+                Otec: IC Alwaro Kent<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>KISHA GARFIELD'S BABY</strong><br>
+                5. 1. 2016<br>
+                černě želvovinová stříbřitá tečkovaná s bílou<br> (fs 09 24)<br>
+                <strong>Rodokmen</strong><br>
+                Matka: Rebeka Garfield's Baby<br>
+                Otec: Lukas Baccaracoon<br>
+            </div>
+        </div>
     </div>
 
 </body>

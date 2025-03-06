@@ -42,6 +42,51 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <?php include("navbar.php"); ?>
     </header>
 
+    <div class="blur-bg-overlay"></div>
+    <div class="form-popup">
+        <span class="close-btn material-symbols-rounded">close</span>
+        <div class="form-box login">
+            <div class="form-content">
+                <h2 id="login-text1">PŘIHLÁSIT SE</h2>
+                <form method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                    <div class="input-field">
+                        <input type="text" name="username" required>
+                        <label id="type-email1">Zadej uživatelské jméno</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password" required>
+                        <label id="type-passw1">Zadej heslo</label>
+                    </div>
+                    <button id="loginBtn1" type="submit" name="login">Přihlásit se</button>
+                </form>
+                <div id="bottom1" class="bottom-link">
+                    Ještě nejsi zaregistrovaný?
+                    <a href="#" id="signup-link">Zaregistrovat se</a>
+                </div>
+            </div>
+        </div>
+        <div class="form-box signup">
+            <div class="form-content">
+                <h2 id="login-text2">ZAREGISTROVAT SE</h2>
+                <form method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                    <div class="input-field">
+                        <input type="text" name="username" required>
+                        <label id="type-email2">Zadej uživatelské jméno</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password" required>
+                        <label id="type-passw2">Zadej heslo</label>
+                    </div>
+                    <button id="loginBtn2" type="submit" name="signup">Zaregistrovat se</button>
+                </form>
+                <div id="bottom2" class="bottom-link">
+                    Už máš účet?
+                    <a href="#" id="login-link">Přihlásit se</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main>
         <section class="description">
             <h2><?php echo translate('why_adopt'); ?></h2>
@@ -54,12 +99,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <li><?php echo translate('condition3'); ?></li>
             </ul>
             <h2><?php echo translate('adoption_process'); ?></h2>
-            <p><?php echo translate('process_step1'); ?></p>
-            <p><?php echo translate('process_step2'); ?></p>
-            <p><?php echo translate('process_step3'); ?></p>
-            <p><?php echo translate('process_step4'); ?></p>
-            <p><?php echo translate('process_step5'); ?></p>
+            <ul>
+                <li><?php echo translate('process_step1'); ?></li>
+                <li><?php echo translate('process_step2'); ?></li>
+                <li><?php echo translate('process_step3'); ?></li>
+                <li><?php echo translate('process_step4'); ?></li>
+                <li><?php echo translate('process_step5'); ?></li>
+            </ul>
+
             <h2><?php echo translate('what_you_get'); ?></h2>
+
             <p><?php echo translate('what_you_get_text'); ?></p>
             <ul>
                 <li><?php echo translate('get_item1'); ?></li>

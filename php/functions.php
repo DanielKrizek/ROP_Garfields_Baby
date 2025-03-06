@@ -25,12 +25,12 @@ function login($conn, $username, $password)
             $_SESSION['user_id'] = $user_data['user_id'];
             $_SESSION['username'] = $user_data['username'];
 
-            echo "<script>window.location.href = 'index.php';</script>";
+            header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']));
             die;
         }
     }
     echo "<script>alert('Neplatné uživatelské jméno nebo heslo');</script>";
-    echo "<script>window.location.href = 'index.php';</script>";
+    echo "<script>window.location.href = '" . htmlspecialchars($_SERVER['PHP_SELF']) . "';</script>";
     return;
 }
 
@@ -81,7 +81,7 @@ function translate($text)
             'toms' => 'Kocouři',
             'neuters' => 'Kastráti',
             'plan' => 'Plán',
-            'gallery' => 'Fotogalerie',
+            'contact' => 'Kontakt',
             'offspring' => 'Odchovy',
             'news' => 'Novinky',
             'description-text' => 'Jsme chovatelská stanice sídlící ve Zbožíčku poblíž Benátek nad Jizerou. Všechny naše kočky a kocouři žijí v dokonalém souladu se psy. Mají možnost trávit volný čas venku i v domě díky zabezpečenému venkovnímu výběhu. Kdykoli chtějí, honí se v trávě, lezou po stromech nebo se vyhřívají na sluníčku. Po celý den mají k dospozici kvalitními superprémiové granulky Royal Canin a rádi si pochutnají i na jiných kočičích pochoutkách, kapsičkách, šunce, syrovém hovězím mase.',
@@ -109,7 +109,7 @@ function translate($text)
             'what_you_get' => 'Co dostanete s kočkou?',
             'what_you_get_text' => 'Každá kočka od nás odchází:',
             'get_item1' => 'Plně očkovaná a odčervená.',
-            'get_item2' => 'S průkazem původu (pokud jde o kočku s PP).',
+            'get_item2' => 'S průkazem původu.',
             'get_item3' => 'S veterinárním potvrzením o zdravotním stavu.',
             'get_item4' => 'S malým startovacím balíčkem (krmivo, hračka apod.).',
             // Add more translations as needed
@@ -137,7 +137,7 @@ function translate($text)
             'toms' => 'Toms',
             'neuters' => 'Neuters',
             'plan' => 'Plan',
-            'gallery' => 'Gallery',
+            'contact' => 'Contact',
             'offspring' => 'Offspring',
             'news' => 'News',
             'description-text' => 'We are a kennel located in Zbožíček near Venice nad Jizerou. All our cats and tomcats live in perfect harmony with dogs. They have the opportunity to spend their free time outdoors and in the house thanks to a secure outdoor enclosure. Whenever they want, they chase in the grass, climb trees or bask in the sun. They have a good quality Royal Canin super premium kibble available all day long and enjoy other cat treats, pocket pellets, ham, raw beef.',

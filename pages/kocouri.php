@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/grid.css">
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
 </head>
@@ -41,47 +42,98 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <?php include("navbar.php"); ?>
     </header>
 
-    <div class="blur-bg-overlay"></div>
-    <div class="form-popup">
-        <span class="close-btn material-symbols-rounded">close</span>
-        <div class="form-box login">
-            <div class="form-content">
-                <h2 id="login-text1">PŘIHLÁSIT SE</h2>
-                <form method="post">
-                    <div class="input-field">
-                        <input type="text" name="username" required>
-                        <label id="type-email1">Zadej uživatelské jméno</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" required>
-                        <label id="type-passw1">Zadej heslo</label>
-                    </div>
-                    <button id="loginBtn1" type="submit" name="login">Přihlásit se</button>
-                </form>
-                <div id="bottom1" class="bottom-link">
-                    Ještě nejsi zaregistrovaný?
-                    <a href="#" id="signup-link">Zaregistrovat se</a>
-                </div>
+
+    <?php include("logForm.php"); ?>
+
+
+    <div class="blocks-row">
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>KRISTIAN A LYNX STAR</strong><br>
+                27. 8. 2023<br>
+                černá stříbřitá mramorovaná s bílou<br> (ns 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: Alwaro Safari Wind<br>
+                Matka: Raffaella Noblesse<br>
             </div>
         </div>
-        <div class="form-box signup">
-            <div class="form-content">
-                <h2 id="login-text2">ZAREGISTROVAT SE</h2>
-                <form method="post">
-                    <div class="input-field">
-                        <input type="text" name="username" required>
-                        <label id="type-email2">Zadej uživatelské jméno</label>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" name="password" required>
-                        <label id="type-passw2">Zadej heslo</label>
-                    </div>
-                    <button id="loginBtn2" type="submit" name="signup">Zaregistrovat se</button>
-                </form>
-                <div id="bottom2" class="bottom-link">
-                    Už máš účet?
-                    <a href="#" id="login-link">Přihlásit se</a>
-                </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>SAMURAI OXYMORON</strong><br>
+                1. 3. 2021<br>
+                bílá s modrýma očima<br> (w 61)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: Poseidon Oxymoron<br>
+                Matka: Mainelynx Fawnia<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>HOPE GARFIELD'S BABY</strong><br>
+                8. 8. 2020<br>
+                červená stříbřitá mramorovaná s bílou<br> (ds 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: Zuchero A Lynx Star<br>
+                Matka: Happy Agostino<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>MARIO NOBLESSE A LYNX STAR</strong><br>
+                20. 8. 2020<br>
+                modrá mramorovaná s bílou<br> (a 09 22)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: Pillowtalk's Michigan<br>
+                Matka: Katherine Kerry A Lynx Star<br>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="big-image"></div>
+            <div class="small-images">
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+                <div class="small-image"></div>
+            </div>
+            <div class="info">
+                <strong>HONEYDEVIL NECTARINE</strong><br>
+                26. 6. 2019<br>
+                červená stříbřitá ticked<br> (ds 25)<br>
+                <strong>Rodokmen</strong><br>
+                Otec: ICH Respectcoon Sunshine Grand<br>
+                Matka: HoneyDevil Torry Red<br>
             </div>
         </div>
     </div>

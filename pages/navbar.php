@@ -12,14 +12,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <div class="navbar-right">
         <ul class="links">
             <span class="close-btn material-symbols-rounded">close</span>
-            <li><a id="navbar1" href="kocky.php"><?php echo translate('cats'); ?></a></li>
-            <li><a id="navbar2" href="kotata.php"><?php echo translate('kittens'); ?></a></li>
-            <li><a id="navbar3" href="kocouri.php"><?php echo translate('toms'); ?></a></li>
-            <li><a id="navbar4" href="#"><?php echo translate('neuters'); ?></a></li>
-            <li><a id="navbar5" href="#"><?php echo translate('plan'); ?></a></li>
-            <li><a id="navbar6" href="#"><?php echo translate('gallery'); ?></a></li>
-            <li><a id="navbar7" href="#"><?php echo translate('offspring'); ?></a></li>
-            <li><a id="navbar8" href="#"><?php echo translate('news'); ?></a></li>
+            <li><a id="navbar1" href="kocky.php" class="<?= ($current_page == 'kocky.php') ? 'active' : '' ?>"><?php echo translate('cats'); ?></a></li>
+            <li><a id="navbar2" href="kotata.php" class="<?= ($current_page == 'kotata.php') ? 'active' : '' ?>"><?php echo translate('kittens'); ?></a></li>
+            <li><a id="navbar3" href="kocouri.php" class="<?= ($current_page == 'kocouri.php') ? 'active' : '' ?>"><?php echo translate('toms'); ?></a></li>
+            <li><a id="navbar4" href="#" class="<?= ($current_page == 'kastrati.php') ? 'active' : '' ?>"><?php echo translate('neuters'); ?></a></li>
+            <li><a id="navbar5" href="#" class="<?= ($current_page == 'plan.php') ? 'active' : '' ?>"><?php echo translate('plan'); ?></a></li>
+            <li><a id="navbar6" href="#" class="<?= ($current_page == 'odchovy.php') ? 'active' : '' ?>"><?php echo translate('offspring'); ?></a></li>
+            <li><a id="navbar7" href="#" class="<?= ($current_page == 'novinky.php') ? 'active' : '' ?>"><?php echo translate('news'); ?></a></li>
+            <li><a id="navbar8" href="kontakt.php" class="<?= ($current_page == 'kontakt.php') ? 'active' : '' ?>"><?php echo translate('contact'); ?></a></li>
         </ul>
 
         <?php if (isset($_SESSION['username'])): ?>
@@ -27,7 +27,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <button class="logout-btn"><?php echo translate('logged_in') . $_SESSION['username']; ?>!</button>
                 <div class="dropdown-content">
                     <a href="#"><?php echo translate('profile'); ?></a> <!-- Replace with actual link -->
-                    <a href="php/logout.php" class="logout-link"><?php echo translate('logout'); ?></a>
+                    <a href="../php/logout.php?redirect=<?= urlencode($_SERVER['PHP_SELF']); ?>" class="logout-link"><?php echo translate('logout'); ?></a>
                 </div>
             </div>
         <?php else: ?>
