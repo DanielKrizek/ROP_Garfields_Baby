@@ -33,8 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="stylesheet" href="../styles/grid.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+    <script src="https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js"></script>
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
+    <script src="../js/modal.js" defer></script>
 </head>
 
 <body>
@@ -46,12 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <div class="blocks-row">
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/omarion_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/omarion_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/omarion_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/omarion_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/omarion_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>OMARION QUEEN OF DAN</strong><br>
@@ -63,12 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
         </div>
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/olivia_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/olivia_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/olivia_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/olivia_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/olivia_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>OLIVIA GARFIELD'S BABY</strong><br>
@@ -80,12 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
         </div>
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/angela_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/angela_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/angela_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/angela_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/angela_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>ANGELA GARFIELD'S BABY</strong><br>
@@ -98,12 +107,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/quella_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/quella_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/quella_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/quella_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/quella_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>QUELLA GARFIELD'S BABY</strong><br>
@@ -116,12 +127,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/rachel_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/rachel_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/rachel_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/rachel_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/rachel_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>RACHEL GARFIELD'S BABY</strong><br>
@@ -134,12 +147,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/hany_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/hany_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/hany_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/hany_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/hany_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>HANY GARFIELD'S BABY</strong><br>
@@ -152,12 +167,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/katelynn_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/katelynn_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/katelynn_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/katelynn_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/katelynn_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>KATELYNN GARFIELD'S BABY</strong><br>
@@ -170,12 +187,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/cassandra_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/cassandra_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/cassandra_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/cassandra_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/cassandra_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>CASSANDRA GARFIELD'S BABY</strong><br>
@@ -188,12 +207,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/debbie_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/debbie_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/debbie_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/debbie_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/debbie_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>DEBBIE GARFIELD'S BABY</strong><br>
@@ -206,12 +227,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/kamey_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/kamey_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/kamey_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/kamey_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/kamey_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>KAMEY GARFIELD'S BABY</strong><br>
@@ -224,12 +247,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/pady_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/pady_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/pady_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/pady_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/pady_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>PADY GARFIELD'S BABY</strong><br>
@@ -242,12 +267,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/happy_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/happy_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/happy_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/happy_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/happy_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>HAPPY AGOSTINO</strong><br>
@@ -260,12 +287,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/cats/kisha_01.jpg" alt="kocka" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/cats/kisha_02.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/kisha_03.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/kisha_04.jpg" alt="kocka" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/cats/kisha_05.jpg" alt="kocka" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>KISHA GARFIELD'S BABY</strong><br>
@@ -275,6 +304,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 Matka: Rebeka Garfield's Baby<br>
                 Otec: Lukas Baccaracoon<br>
             </div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content-wrapper">
+            <img class="modal-content" id="modalImage">
         </div>
     </div>
 

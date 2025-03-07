@@ -29,8 +29,6 @@ main {
     margin-top: 0;
 }
 
-
-/* Seznam adresy */
 .description ul {
     list-style: none;
     padding: 10px;
@@ -57,3 +55,106 @@ a
     margin-top: 20px;
 }
 
+
+.contact-form .form-group:last-of-type {
+    margin-bottom: 10px; /* Adjust this value as needed */
+}
+
+.contact-form {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto 40px auto; /* Add 40px margin below the form */
+}
+
+.contact-form h3 {
+    color: #333;
+    border-bottom: 2px solid #FF8DC7;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.contact-form .form-group {
+    margin-bottom: 15px;
+}
+
+.contact-form label {
+    font-size: 16px;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form button.submit-button {
+    background-color: #FF8DC7;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.contact-form button.submit-button:hover {
+    background-color: #ff7eb9;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.alert.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.alert.error {
+    background-color: #f44336;
+    color: white;
+}
+
+#success-alert {
+    display: block;
+}
+
+.not-logged-in-message {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 40px;
+}

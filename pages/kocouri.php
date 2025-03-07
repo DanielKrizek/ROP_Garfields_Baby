@@ -33,8 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="stylesheet" href="../styles/grid.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+    <script src="https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js"></script>
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
+    <script src="../js/modal.js" defer></script>
 </head>
 
 <body>
@@ -48,12 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <div class="blocks-row">
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/toms/kristian_01.jpg" alt="kristian" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/toms/kristian_02.jpg" alt="kristian" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/kristian_03.jpg" alt="kristian" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/kristian_04.jpg" alt="kristian" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/kristian_05.jpg" alt="kristian" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>KRISTIAN A LYNX STAR</strong><br>
@@ -66,12 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/toms/samurai_01.jpg" alt="samurai" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/toms/samurai_02.jpg" alt="samurai" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/samurai_03.jpg" alt="samurai" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/samurai_04.jpg" alt="samurai" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/samurai_05.jpg" alt="samurai" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>SAMURAI OXYMORON</strong><br>
@@ -84,12 +91,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/toms/hope_01.jpg" alt="hope" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/toms/hope_02.jpg" alt="hope" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/hope_03.jpg" alt="hope" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/hope_04.jpg" alt="hope" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/hope_05.jpg" alt="hope" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>HOPE GARFIELD'S BABY</strong><br>
@@ -102,12 +111,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/toms/mario_01.jpg" alt="mario" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/toms/mario_02.jpg" alt="mario" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/mario_03.jpg" alt="mario" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/mario_04.jpg" alt="mario" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/mario_05.jpg" alt="mario" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>MARIO NOBLESSE A LYNX STAR</strong><br>
@@ -120,12 +131,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
 
         <div class="block">
-            <div class="big-image"></div>
+            <div class="big-image">
+                <img src="../img/toms/honeydevil_01.jpg" alt="honeydevil" class="enlargeable">
+            </div>
             <div class="small-images">
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
-                <div class="small-image"></div>
+                <div class="small-image"><img src="../img/toms/honeydevil_02.jpg" alt="honeydevil" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/honeydevil_03.jpg" alt="honeydevil" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/honeydevil_04.jpg" alt="honeydevil" class="enlargeable"></div>
+                <div class="small-image"><img src="../img/toms/honeydevil_05.jpg" alt="honeydevil" class="enlargeable"></div>
             </div>
             <div class="info">
                 <strong>HONEYDEVIL NECTARINE</strong><br>
@@ -137,6 +150,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
         </div>
     </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content-wrapper">
+            <img class="modal-content" id="modalImage">
+        </div>
+    </div>
+
 </body>
 
 </html>

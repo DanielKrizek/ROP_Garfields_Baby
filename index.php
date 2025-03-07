@@ -49,13 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <ul class="links">
                     <span class="close-btn material-symbols-rounded">close</span>
                     <li><a id="navbar1" href="pages/kocky.php"><?php echo translate('cats'); ?></a></li>
-                    <li><a id="navbar2" href="pages/kotata.php"><?php echo translate('kittens'); ?></a></li>
-                    <li><a id="navbar3" href="pages/kocouri.php"><?php echo translate('toms'); ?></a></li>
-                    <li><a id="navbar4" href="#"><?php echo translate('neuters'); ?></a></li>
-                    <li><a id="navbar5" href="#"><?php echo translate('plan'); ?></a></li>
-                    <li><a id="navbar6" href="#"><?php echo translate('offspring'); ?></a></li>
-                    <li><a id="navbar7" href="#"><?php echo translate('news'); ?></a></li>
-                    <li><a id="navbar8" href="pages/kontakt.php"><?php echo translate('contact'); ?></a></li>
+                    <li><a id="navbar2" href="pages/kocouri.php"><?php echo translate('toms'); ?></a></li>
+                    <li><a id="navbar3" href="pages/kastrati.php"><?php echo translate('castrates'); ?></a></li>
+                    <li><a id="navbar4" href="#"><?php echo translate('kittens'); ?></a></li>
+                    <li><a id="navbar5" href="#"><?php echo translate('offspring'); ?></a></li>
+                    <li><a id="navbar6" href="#"><?php echo translate('news'); ?></a></li>
+                    <li><a id="navbar7" href="pages/kontakt.php"><?php echo translate('contact'); ?></a></li>
                 </ul>
 
                 <?php if (isset($_SESSION['username'])): ?>
@@ -96,16 +95,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         <section class="info-section">
             <div class="info-box">
-                <img src="img/kote.jpg" alt="Koťata">
-                <a href="pages/kotata.php" class="info-btn"><?php echo translate('view_kittens'); ?></a>
-            </div>
-            <div class="info-box">
                 <img src="img/kocka2.jpg" alt="Kočky">
                 <a href="pages/kocky.php" class="info-btn"><?php echo translate('view_cats'); ?></a>
             </div>
             <div class="info-box">
                 <img src="img/kocour.jpg" alt="Kocouři">
                 <a href="pages/kocouri.php" class="info-btn"><?php echo translate('view_toms'); ?></a>
+            </div>
+            <div class="info-box">
+                <img src="img/kote.jpg" alt="Kastráti">
+                <a href="pages/kastrati.php" class="info-btn"><?php echo translate('view_castrates'); ?></a>
             </div>
         </section>
     </main>
