@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const hidePopupBtn = formPopup.querySelector(".close-btn");
     const signupLoginLink = formPopup.querySelectorAll(".bottom-link a");
 
+    // Add main page link to mobile menu
+    const mainPageLink = document.createElement("li");
+    mainPageLink.classList.add("mobile-only");
+    mainPageLink.innerHTML = '<a href="index.php">Hlavní stránka</a>';
+    navbarMenu.insertBefore(mainPageLink, navbarMenu.firstChild);
+
     // Show mobile menu
     hamburgerBtn.addEventListener("click", () => {
         navbarMenu.classList.toggle("show-menu");

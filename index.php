@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         <section class="info-section">
             <div class="info-box">
-                <img src="img/kocka2.jpg" alt="Kočky">
+                <img src="img/kocka.jpg" alt="Kočky">
                 <a href="pages/kocky.php" class="info-btn"><?php echo translate('view_cats'); ?></a>
             </div>
             <div class="info-box">

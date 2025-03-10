@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     ?>
         <section class="contact-form">
             <h3><?php echo translate('contact_form'); ?></h3>
-            <form action="../php/odeslaneKontakty.php" method="POST">
+            <form action="../php/odeslaneKontakty.php" method="POST" id="contact-form">
                 <div class="form-group">
                     <label for="name"><?php echo translate('contact_name'); ?></label>
                     <input type="text" id="name" name="name" required>
@@ -94,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 </div>
                 <button type="submit" class="submit-button"><?php echo translate('contact_submit'); ?></button>
             </form>
+
         </section>
     <?php
     }
@@ -108,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             .bindPopup('Zbožíčko 71, 289 25 Zbožíčko')
             .openPopup();
     </script>
+
     <script>
         window.addEventListener('DOMContentLoaded', (event) => {
             const successAlert = document.getElementById('success-alert');
@@ -118,6 +120,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             }
         });
     </script>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !message) {
+                alert("Všechna pole jsou povinná.");
+                event.preventDefault();
+            }
+
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            if (!emailPattern.test(email)) {
+                alert("Zadejte platnou emailovou adresu.");
+                event.preventDefault();
+            }
+        });
+    </script>
+
 </body>
 
 </html>
