@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
             <div class="navbar-right">
                 <ul class="links">
-                    <span class="close-btn material-symbols-rounded">close</span>
                     <li><a id="navbar1" href="pages/kocky.php"><?php echo translate('cats'); ?></a></li>
                     <li><a id="navbar2" href="pages/kocouri.php"><?php echo translate('toms'); ?></a></li>
                     <li><a id="navbar3" href="pages/kastrati.php"><?php echo translate('castrates'); ?></a></li>

@@ -1,9 +1,17 @@
 <?php
-session_start();
+session_start(); // Musí být úplně první
 
 include("../php/connection.php");
 include("../php/functions.php");
 
+
+$conn = new mysqli("localhost", "root", "", "kocicky");
+
+if ($conn->connect_error) {
+    die("Chyba připojení: " . $conn->connect_error);
+}
+
+// Zpracování přihlášení, registrace a výběru jazyka
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['login'])) {
         $username = $_POST['username'];
@@ -45,117 +53,37 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <?php include("navbar.php"); ?>
     </header>
 
-
     <?php include("logForm.php"); ?>
 
-
     <div class="blocks-row">
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/toms/kristian_01.jpg" alt="kristian" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/toms/kristian_02.jpg" alt="kristian" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/kristian_03.jpg" alt="kristian" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/kristian_04.jpg" alt="kristian" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/kristian_05.jpg" alt="kristian" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>KRISTIAN A LYNX STAR</strong><br>
-                27. 8. 2023<br>
-                černá stříbřitá mramorovaná s bílou<br> (ns 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: Alwaro Safari Wind<br>
-                Matka: Raffaella Noblesse<br>
-            </div>
-        </div>
+        <?php
+        // Dotaz na kočky z databáze
+        $query = "SELECT * FROM toms";
+        $result = mysqli_query($conn, $query);
 
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/toms/samurai_01.jpg" alt="samurai" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/toms/samurai_02.jpg" alt="samurai" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/samurai_03.jpg" alt="samurai" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/samurai_04.jpg" alt="samurai" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/samurai_05.jpg" alt="samurai" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>SAMURAI OXYMORON</strong><br>
-                1. 3. 2021<br>
-                bílá s modrýma očima<br> (w 61)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: Poseidon Oxymoron<br>
-                Matka: Mainelynx Fawnia<br>
-            </div>
-        </div>
+        while ($row = mysqli_fetch_assoc($result)) {
+            $images = explode(',', $row['gallery_images']); // Rozdělení obrázků na pole
 
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/toms/hope_01.jpg" alt="hope" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/toms/hope_02.jpg" alt="hope" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/hope_03.jpg" alt="hope" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/hope_04.jpg" alt="hope" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/hope_05.jpg" alt="hope" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>HOPE GARFIELD'S BABY</strong><br>
-                8. 8. 2020<br>
-                červená stříbřitá mramorovaná s bílou<br> (ds 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: Zuchero A Lynx Star<br>
-                Matka: Happy Agostino<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/toms/mario_01.jpg" alt="mario" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/toms/mario_02.jpg" alt="mario" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/mario_03.jpg" alt="mario" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/mario_04.jpg" alt="mario" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/mario_05.jpg" alt="mario" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>MARIO NOBLESSE A LYNX STAR</strong><br>
-                20. 8. 2020<br>
-                modrá mramorovaná s bílou<br> (a 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: Pillowtalk's Michigan<br>
-                Matka: Katherine Kerry A Lynx Star<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/toms/honeydevil_01.jpg" alt="honeydevil" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/toms/honeydevil_02.jpg" alt="honeydevil" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/honeydevil_03.jpg" alt="honeydevil" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/honeydevil_04.jpg" alt="honeydevil" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/toms/honeydevil_05.jpg" alt="honeydevil" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>HONEYDEVIL NECTARINE</strong><br>
-                26. 6. 2019<br>
-                červená stříbřitá ticked<br> (ds 25)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: ICH Respectcoon Sunshine Grand<br>
-                Matka: HoneyDevil Torry Red<br>
-            </div>
-        </div>
-    </div>
-
-    <div id="imageModal" class="modal">
-        <span class="close">&times;</span>
-        <div class="modal-content-wrapper">
-            <img class="modal-content" id="modalImage">
-        </div>
+            echo '<div class="block">';
+            echo '    <div class="big-image">';
+            echo '        <img src="' . $row['main_image'] . '" alt="' . $row['name'] . '" class="enlargeable">';
+            echo '    </div>';
+            echo '    <div class="small-images">';
+            foreach ($images as $image) {
+                echo '        <div class="small-image"><img src="' . $image . '" alt="' . $row['name'] . '" class="enlargeable"></div>';
+            }
+            echo '    </div>';
+            echo '    <div class="info">';
+            echo '        <strong>' . $row['name'] . '</strong><br>';
+            echo '        ' . date('j. n. Y', strtotime($row['birth_date'])) . '<br>';
+            echo '        ' . $row['color_pattern'] . '<br> (' . $row['breed_code'] . ')<br>';
+            echo '        <strong>Rodokmen</strong><br>';
+            echo '        Matka: ' . $row['mother'] . '<br>';
+            echo '        Otec: ' . $row['father'] . '<br>';
+            echo '    </div>';
+            echo '</div>';
+        }
+        ?>
     </div>
 
 </body>

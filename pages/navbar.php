@@ -11,7 +11,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </div>
     <div class="navbar-right">
         <ul class="links">
-            <span class="close-btn material-symbols-rounded">close</span>
             <li><a id="navbar1" href="kocky.php" class="<?= ($current_page == 'kocky.php') ? 'active' : '' ?>"><?php echo translate('cats'); ?></a></li>
             <li><a id="navbar2" href="kocouri.php" class="<?= ($current_page == 'kocouri.php') ? 'active' : '' ?>"><?php echo translate('toms'); ?></a></li>
             <li><a id="navbar3" href="kastrati.php" class="<?= ($current_page == 'kastrati.php') ? 'active' : '' ?>"><?php echo translate('castrates'); ?></a></li>
