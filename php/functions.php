@@ -3,11 +3,15 @@ function check_login($conn)
 {
     if (isset($_SESSION['user_id'])) {
         $id = $_SESSION['user_id'];
-        $query = "select * from users where user_id = '$id' limit 1";
-        $result = mysqli_query($conn, $query);
+        $query = "SELECT * FROM users WHERE user_id = ? LIMIT 1";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user_data = mysqli_fetch_assoc($result);
+        if ($result && $result->num_rows > 0) {
+            $user_data = $result->fetch_assoc();
+            $_SESSION['role'] = $user_data['role']; // Uložení role do session
             return $user_data;
         }
     }
@@ -16,7 +20,7 @@ function check_login($conn)
 
 function login($conn, $username, $password)
 {
-    $query = "select * from users where username = '$username' limit 1";
+    $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
     $result = mysqli_query($conn, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -24,6 +28,7 @@ function login($conn, $username, $password)
         if (password_verify($password, $user_data['password'])) {
             $_SESSION['user_id'] = $user_data['user_id'];
             $_SESSION['username'] = $user_data['username'];
+            $_SESSION['role'] = $user_data['role']; // Set the role in the session
 
             header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']));
             die;

@@ -6,9 +6,11 @@ include("../php/functions.php");
 
 
 $conn = new mysqli("localhost", "root", "", "kocicky");
+$connUsers = new mysqli("localhost", "root", "", "login");
 
-if ($conn->connect_error) {
-    die("Chyba připojení: " . $conn->connect_error);
+
+if ($connUsers->connect_error) {
+    die("Chyba připojení: " . $connUsers->connect_error);
 }
 
 // Zpracování přihlášení, registrace a výběru jazyka
@@ -16,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['login'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $error = login($conn, $username, $password);
+        $error = login($connUsers, $username, $password);
     } elseif (isset($_POST['signup'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $message = signup($conn, $username, $password);
+        $message = signup($connUsers, $username, $password);
     } elseif (isset($_POST['lang-select'])) {
         $_SESSION['lang'] = $_POST['lang-select'];
     }

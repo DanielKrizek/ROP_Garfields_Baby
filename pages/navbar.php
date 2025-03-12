@@ -18,13 +18,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li><a id="navbar5" href="#" class="<?= ($current_page == 'odchovy.php') ? 'active' : '' ?>"><?php echo translate('offspring'); ?></a></li>
             <li><a id="navbar6" href="#" class="<?= ($current_page == 'novinky.php') ? 'active' : '' ?>"><?php echo translate('news'); ?></a></li>
             <li><a id="navbar7" href="kontakt.php" class="<?= ($current_page == 'kontakt.php') ? 'active' : '' ?>"><?php echo translate('contact'); ?></a></li>
+
+            <!-- Odkaz na admin panel (zobrazí se pouze adminům) -->
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                <li><a id="navbar-admin" href="admin/admin_panel.php" class="<?= ($current_page == 'admin/admin_panel.php') ? 'active' : '' ?>">Admin</a></li>
+            <?php endif; ?>
         </ul>
 
         <?php if (isset($_SESSION['username'])): ?>
             <div class="dropdown">
-                <button class="logout-btn"><?php echo translate('logged_in') . $_SESSION['username']; ?>!</button>
+                <button class="logout-btn"><?php echo translate('logged_in') . ' ' . $_SESSION['username']; ?>!</button>
                 <div class="dropdown-content">
-                    <a href="#"><?php echo translate('profile'); ?></a> <!-- Replace with actual link -->
+                    <a href="#"><?php echo translate('profile'); ?></a> <!-- Zatím placeholder -->
                     <a href="../php/logout.php?redirect=<?= urlencode($_SERVER['PHP_SELF']); ?>" class="logout-link"><?php echo translate('logout'); ?></a>
                 </div>
             </div>

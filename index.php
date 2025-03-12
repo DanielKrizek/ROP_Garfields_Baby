@@ -54,6 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <li><a id="navbar5" href="#"><?php echo translate('offspring'); ?></a></li>
                     <li><a id="navbar6" href="#"><?php echo translate('news'); ?></a></li>
                     <li><a id="navbar7" href="pages/kontakt.php"><?php echo translate('contact'); ?></a></li>
+
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+                        <li><a id="navbar-admin" href="pages/admin/admin_panel.php" class="<?= ($current_page == 'pages/admin/admin_panel.php') ? 'active' : '' ?>">Admin</a></li>
+                    <?php endif; ?>
                 </ul>
 
                 <?php if (isset($_SESSION['username'])): ?>
