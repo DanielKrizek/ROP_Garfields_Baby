@@ -273,6 +273,11 @@
         padding: 10px 0;
         width: auto;
     }
+
+    .logout-btn {
+        width: 120px;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -304,6 +309,13 @@
         height: 42px;
         width: 140px;
         white-space: nowrap;
+    }
+}
+
+@media (max-width: 760px) {
+    .logout-btn {
+        width: 100px;
+        font-size: 0.8rem;
     }
 }
 

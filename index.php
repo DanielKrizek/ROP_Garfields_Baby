@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <li><a id="navbar3" href="pages/kastrati.php"><?php echo translate('castrates'); ?></a></li>
                     <li><a id="navbar4" href="#"><?php echo translate('kittens'); ?></a></li>
                     <li><a id="navbar5" href="#"><?php echo translate('offspring'); ?></a></li>
-                    <li><a id="navbar6" href="#"><?php echo translate('news'); ?></a></li>
+                    <li><a id="navbar6" href="pages/novinky.php"><?php echo translate('news'); ?></a></li>
                     <li><a id="navbar7" href="pages/kontakt.php"><?php echo translate('contact'); ?></a></li>
 
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <div class="dropdown">
                         <button class="logout-btn"><?php echo translate('logged_in') . $_SESSION['username']; ?>!</button>
                         <div class="dropdown-content">
-                            <a href="#"><?php echo translate('profile'); ?></a> <!-- Replace with actual link -->
+                            <a href="pages/profile.php"><?php echo translate('profile'); ?></a>
                             <a href="php/logout.php" class="logout-link"><?php echo translate('logout'); ?></a>
                         </div>
                     </div>

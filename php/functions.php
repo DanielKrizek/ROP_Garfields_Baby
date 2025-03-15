@@ -53,9 +53,19 @@ function signup($conn, $username, $password)
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $query = "insert into users (username, password) values ('$username', '$hashed_password')";
     if (mysqli_query($conn, $query)) {
-        echo "<script>alert('Registrace proběhla úspěšně, můžete se nyní přihlásit.');</script>";
-        echo "<script>window.location.href = window.location.href;</script>";
-        return;
+        // Fetch the newly created user data
+        $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        if ($result && mysqli_num_rows($result) > 0) {
+            $user_data = mysqli_fetch_assoc($result);
+            // Log in the user
+            $_SESSION['user_id'] = $user_data['user_id'];
+            $_SESSION['username'] = $user_data['username'];
+            $_SESSION['role'] = $user_data['role']; // Set the role in the session
+
+            echo "<script>window.location.href = '" . htmlspecialchars($_SERVER['PHP_SELF']) . "';</script>";
+            return;
+        }
     }
     return "Signup failed";
 }

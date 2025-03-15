@@ -13,6 +13,7 @@ if ($conn->connect_error) {
 }
 
 $conn = new mysqli("localhost", "root", "", "kocicky");
+$connNews = new mysqli("localhost", "root", "", "news");
 $connUsers = new mysqli("localhost", "root", "", "login");
 
 // Ensure the table name is correct
@@ -25,7 +26,10 @@ $resultKocky = mysqli_query($conn, $queryKocky);
 $queryKocouri = "SELECT * FROM toms";
 $resultKocouri = mysqli_query($conn, $queryKocouri);
 
-if (!$resultCastrates || !$resultKocky || !$resultKocouri) {
+$queryClanky = "SELECT * FROM news ORDER BY created_at DESC";
+$resultClanky = mysqli_query($connNews, $queryClanky);
+
+if (!$resultCastrates || !$resultKocky || !$resultKocouri || !$resultClanky) {
     die("Query failed: " . mysqli_error($conn));
 }
 ?>
@@ -92,6 +96,25 @@ if (!$resultCastrates || !$resultKocky || !$resultKocouri) {
             </tr>
         <?php endwhile; ?>
     </table>
+
+    <h1>Správa článků</h1>
+    <a href="add_article.php">Přidat článek</a>
+    <table border="1">
+        <tr>
+            <th>Titulek</th>
+            <th>Akce</th>
+        </tr>
+        <?php while ($row = mysqli_fetch_assoc($resultClanky)): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['title']) ?></td>
+                <td>
+                    <a href="edit_article.php?id=<?= $row['id'] ?>">Upravit</a>
+                    <a href="delete_article.php?id=<?= $row['id'] ?>" onclick="return confirm('Opravdu chcete smazat?')">Smazat</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
+
 </body>
 
 </html>

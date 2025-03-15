@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImage");
-    const closeBtn = document.getElementsByClassName("close")[0];
+    const closeBtn = document.querySelector(".close"); // Use querySelector to select the close button
 
     document.querySelectorAll(".enlargeable").forEach(img => {
         img.addEventListener("click", function() {
@@ -18,11 +18,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     closeBtn.addEventListener("click", function() {
         modal.style.display = "none";
+        panzoom(modalImg).dispose(); // Dispose panzoom instance when closing modal
     });
 
     window.addEventListener("click", function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
+            panzoom(modalImg).dispose(); // Dispose panzoom instance when closing modal
         }
     });
 });

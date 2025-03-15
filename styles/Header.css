@@ -380,6 +380,11 @@ select {
         padding: 10px 0;
         width: auto;
     }
+
+    .navbar .logout-btn {
+        width: 120px;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 760px) {
@@ -406,5 +411,10 @@ select {
     .navbar .links a:hover {
         color: #FF8DC7;
         font-size: 2rem;
+    }
+
+    .navbar .logout-btn {
+        width: 140px;
+        font-size: 0.8rem;
     }
 }

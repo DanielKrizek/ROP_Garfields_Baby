@@ -88,6 +88,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         ?>
     </div>
 
+    <div id="imageModal" class="modal">
+        <div class="modal-content-wrapper">
+            <img class="modal-content" id="modalImage">
+        </div>
+    </div>
+
 </body>
 
 </html>
