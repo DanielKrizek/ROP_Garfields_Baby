@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <li><a id="navbar1" href="pages/kocky.php"><?php echo translate('cats'); ?></a></li>
                     <li><a id="navbar2" href="pages/kocouri.php"><?php echo translate('toms'); ?></a></li>
                     <li><a id="navbar3" href="pages/kastrati.php"><?php echo translate('castrates'); ?></a></li>
-                    <li><a id="navbar4" href="#"><?php echo translate('kittens'); ?></a></li>
-                    <li><a id="navbar5" href="#"><?php echo translate('offspring'); ?></a></li>
+                    <li><a id="navbar4" href="pages/kotata.php"><?php echo translate('kittens'); ?></a></li>
+                    <li><a id="navbar5" href="pages/odchovy.php"><?php echo translate('offspring'); ?></a></li>
                     <li><a id="navbar6" href="pages/novinky.php"><?php echo translate('news'); ?></a></li>
                     <li><a id="navbar7" href="pages/kontakt.php"><?php echo translate('contact'); ?></a></li>
 

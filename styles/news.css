@@ -32,7 +32,9 @@
 }
 
 .news-image {
-    max-width: 20%;
+    max-width: 50%;
+    max-height: 150px;
+    min-width: 220px;
     height: auto;
     margin-bottom: 15px;
     margin-right: 10px;

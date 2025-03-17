@@ -15,7 +15,7 @@ body {
 
 #profile-edit-form {
     max-width: 400px;
-    margin: 80px auto;
+    margin: 20px auto;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -30,18 +30,17 @@ body {
 
 #profile-edit-form input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    box-sizing: border-box;
 }
 
 #profile-edit-form button {
     width: 100%;
     padding: 10px;
     margin-top: 15px;
-    background-color: #ff66a3;
+    background-color: #ff6600;
     color: white;
     font-size: 16px;
     border: none;
@@ -51,11 +50,10 @@ body {
 }
 
 #profile-edit-form button:hover {
-    background-color: #e55a8f;
+    background-color: #e55a00;
 }
 
-/* Specifické ID pro chyby */
-#profile-errors {
+ul {
     max-width: 400px;
     margin: 10px auto;
     padding: 10px;
@@ -65,8 +63,7 @@ body {
     color: #a00;
 }
 
-/* Specifické ID pro zprávy */
-#profile-message {
+p {
     max-width: 400px;
     margin: 10px auto;
     padding: 10px;
@@ -75,11 +72,4 @@ body {
     border-radius: 5px;
     color: #080;
     text-align: center;
-}
-
-/* Oprava zarovnání inputů */
-#profile-edit-form input {
-    display: block;
-    width: calc(100% - 16px);
-    margin: 5px 0;
 }
