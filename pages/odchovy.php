@@ -42,12 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/Header.css">
     <link rel="stylesheet" href="../styles/login.css">
-    <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/navbar.css">
-    <link rel="stylesheet" href="../styles/grid.css">
-    <link rel="stylesheet" href="../styles/modal.css">
-    <link rel="stylesheet" href="../styles/news.css">
     <link rel="stylesheet" href="../styles/odchovy.css">
+    <link rel="stylesheet" href="../styles/grid.css">
     <script src="https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js"></script>
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>

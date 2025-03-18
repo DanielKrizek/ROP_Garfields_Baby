@@ -3,41 +3,41 @@
     <span class="close-btn material-symbols-rounded">close</span>
     <div class="form-box login">
         <div class="form-content">
-            <h2 id="login-text1">PŘIHLÁSIT SE</h2>
+            <h2 id="login-text1"><?php echo translate('login'); ?></h2>
             <form method="post">
                 <div class="input-field">
                     <input type="text" name="username" required>
-                    <label id="type-email1">Zadej uživatelské jméno</label>
+                    <label id="type-email1"><?php echo translate('username'); ?></label>
                 </div>
                 <div class="input-field">
                     <input type="password" name="password" required>
-                    <label id="type-passw1">Zadej heslo</label>
+                    <label id="type-passw1"><?php echo translate('password'); ?></label>
                 </div>
-                <button id="loginBtn1" type="submit" name="login">Přihlásit se</button>
+                <button id="loginBtn1" type="submit" name="login"><?php echo translate('loginBtn'); ?></button>
             </form>
             <div id="bottom1" class="bottom-link">
-                Ještě nejsi zaregistrovaný?
-                <a href="#" id="signup-link">Zaregistrovat se</a>
+                <?php echo translate('not_registered'); ?>
+                <a href="#" id="signup-link"><?php echo translate('signup'); ?></a>
             </div>
         </div>
     </div>
     <div class="form-box signup">
         <div class="form-content">
-            <h2 id="login-text2">ZAREGISTROVAT SE</h2>
+            <h2 id="login-text2"><?php echo translate('signup'); ?></h2>
             <form method="post">
                 <div class="input-field">
                     <input type="text" name="username" required>
-                    <label id="type-email2">Zadej uživatelské jméno</label>
+                    <label id="type-email2"><?php echo translate('username'); ?></label>
                 </div>
                 <div class="input-field">
                     <input type="password" name="password" required>
-                    <label id="type-passw2">Zadej heslo</label>
+                    <label id="type-passw2"><?php echo translate('password'); ?></label>
                 </div>
-                <button id="loginBtn2" type="submit" name="signup">Zaregistrovat se</button>
+                <button id="loginBtn2" type="submit" name="signup"><?php echo translate('signupBtn'); ?></button>
             </form>
             <div id="bottom2" class="bottom-link">
-                Už máš účet?
-                <a href="#" id="login-link">Přihlásit se</a>
+                <?php echo translate('already_registered'); ?>
+                <a href="#" id="login-link"><?php echo translate('login'); ?></a>
             </div>
         </div>
     </div>

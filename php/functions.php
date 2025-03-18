@@ -18,6 +18,16 @@ function check_login($conn)
     die;
 }
 
+function logout()
+{
+    // Preserve the language setting before clearing the session
+    $lang = $_SESSION['lang'] ?? 'cz';
+    session_unset();
+    session_destroy();
+    session_start();
+    $_SESSION['lang'] = $lang; // Restore the language setting
+}
+
 function login($conn, $username, $password)
 {
     $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
@@ -135,6 +145,16 @@ function translate($text)
             'contact_message' => 'Zpráva',
             'contact_submit' => 'Odeslat',
             'contact_notLogged_message' => 'Pro zobrazení kontaktního formuláře se musíte přihlásit.',
+            'profile_edit' => 'Úprava profilu',
+            'new_password_optional' => 'Nové heslo (nepovinné)',
+            'confirm_password' => 'Potvrzení hesla',
+            'save_changes' => 'Uložit změny',
+            'error_username_same' => 'Nové uživatelské jméno musí být odlišné od aktuálního.',
+            'error_username_short' => 'Uživatelské jméno musí mít alespoň 3 znaky.',
+            'error_password_short' => 'Heslo musí mít alespoň 6 znaků.',
+            'error_password_mismatch' => 'Hesla se neshodují.',
+            'profile_update_success' => 'Profil byl úspěšně aktualizován.',
+            'profile_update_error' => 'Chyba při aktualizaci profilu.',
             // Add more translations as needed
         ],
         'en' => [
@@ -191,6 +211,16 @@ function translate($text)
             'contact_message' => 'Message',
             'contact_submit' => 'Submit',
             'contact_notLogged_message' => 'To display the contact form, you must be logged in.',
+            'profile_edit' => 'Edit Profile',
+            'new_password_optional' => 'New Password (optional)',
+            'confirm_password' => 'Confirm Password',
+            'save_changes' => 'Save Changes',
+            'error_username_same' => 'The new username must be different from the current one.',
+            'error_username_short' => 'The username must be at least 3 characters long.',
+            'error_password_short' => 'The password must be at least 6 characters long.',
+            'error_password_mismatch' => 'The passwords do not match.',
+            'profile_update_success' => 'Profile updated successfully.',
+            'profile_update_error' => 'Error updating profile.',
             // Add more translations as needed
         ]
     ];

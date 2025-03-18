@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../index.php");
+    exit();
+}
+
 include("../php/connection.php");
 include("../php/functions.php");
 
@@ -16,26 +21,37 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $username = $user['username'];
 
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['lang-select'])) {
+        $_SESSION['lang'] = $_POST['lang-select'];
+    }
+}
+
+
 // Zpracování formuláře
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $new_username = trim($_POST['username']);
-    $new_password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $new_username = isset($_POST['username']) ? trim($_POST['username']) : '';
+    $new_password = isset($_POST['password']) ? $_POST['password'] : '';
+    $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
 
     $errors = [];
 
     // Validace jména
-    if (strlen($new_username) < 3) {
-        $errors[] = "Uživatelské jméno musí mít alespoň 3 znaky.";
+    if ($new_username === $username) {
+        $errors[] = translate('error_username_same');
+    } elseif (strlen($new_username) < 3) {
+        $errors[] = translate('error_username_short');
     }
 
     // Validace hesla
-    if (!empty($new_password) && strlen($new_password) < 6) {
-        $errors[] = "Heslo musí mít alespoň 6 znaků.";
-    }
-
-    if ($new_password !== $confirm_password) {
-        $errors[] = "Hesla se neshodují.";
+    if (!empty($new_password)) {
+        if (strlen($new_password) < 6) {
+            $errors[] = translate('error_password_short');
+        }
+        if ($new_password !== $confirm_password) {
+            $errors[] = translate('error_password_mismatch');
+        }
     }
 
     // Pokud nejsou chyby, aktualizujeme databázi
@@ -50,11 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Profil byl úspěšně aktualizován.";
+            $_SESSION['message'] = translate('profile_update_success');
             header("Location: profile.php");
             exit();
         } else {
-            $errors[] = "Chyba při aktualizaci profilu.";
+            $errors[] = translate('profile_update_error');
         }
     }
 }
@@ -69,10 +85,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="stylesheet" href="../styles/global.css">
     <script src="https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js"></script>
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
     <script src="../js/modal.js" defer></script>
+    <script>
+        function showAlert(message, isError) {
+            const alertDiv = document.getElementById('custom-alert');
+            alertDiv.textContent = message;
+            alertDiv.style.backgroundColor = isError ? '#ffdddd' : '#ddffdd';
+            alertDiv.style.borderColor = isError ? '#ff5555' : '#55aa55';
+            alertDiv.style.display = 'block';
+
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script>
 </head>
 
 <body>
@@ -82,32 +112,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <?php include("logForm.php"); ?>
 
-    <h2 id="profile-h2">Úprava profilu</h2>
+    <h2 id="profile-h2"><?= translate('profile_edit') ?></h2>
+
+    <div id="custom-alert"></div>
 
     <?php if (!empty($errors)): ?>
-        <ul>
-            <?php foreach ($errors as $error): ?>
-                <li style="color: red;"> <?= htmlspecialchars($error) ?> </li>
-            <?php endforeach; ?>
-        </ul>
+        <script>
+            showAlert("<?= htmlspecialchars(implode(', ', $errors)) ?>", true);
+        </script>
     <?php endif; ?>
 
     <?php if (isset($_SESSION['message'])): ?>
-        <p style="color: green;"> <?= $_SESSION['message'] ?> </p>
+        <script>
+            showAlert("<?= htmlspecialchars($_SESSION['message']) ?>", false);
+        </script>
         <?php unset($_SESSION['message']); ?>
     <?php endif; ?>
 
     <form id="profile-edit-form" action="" method="post">
-        <label for="username">Uživatelské jméno:</label>
+        <label for="username"><?= translate('username') ?>:</label>
         <input type="text" id="username" name="username" value="<?= htmlspecialchars($username) ?>" required>
 
-        <label for="password">Nové heslo (nepovinné):</label>
+        <label for="password"><?= translate('new_password_optional') ?>:</label>
         <input type="password" id="password" name="password">
 
-        <label for="confirm_password">Potvrzení hesla:</label>
+        <label for="confirm_password"><?= translate('confirm_password') ?>:</label>
         <input type="password" id="confirm_password" name="confirm_password">
 
-        <button type="submit">Uložit změny</button>
+        <button type="submit"><?= translate('save_changes') ?></button>
     </form>
 </body>
 
