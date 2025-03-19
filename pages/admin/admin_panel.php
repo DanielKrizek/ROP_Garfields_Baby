@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 $conn = new mysqli("localhost", "root", "", "kocicky");
 $connNews = new mysqli("localhost", "root", "", "news");
 $connUsers = new mysqli("localhost", "root", "", "login");
+$connOdchovy = new mysqli("localhost", "root", "", "odchovy");
 
 // Ensure the table name is correct
 $queryCastrates = "SELECT * FROM castrates";
@@ -29,7 +30,10 @@ $resultKocouri = mysqli_query($conn, $queryKocouri);
 $queryClanky = "SELECT * FROM news ORDER BY created_at DESC";
 $resultClanky = mysqli_query($connNews, $queryClanky);
 
-if (!$resultCastrates || !$resultKocky || !$resultKocouri || !$resultClanky) {
+$queryOdchovy = "SELECT * FROM litters";
+$resultOdchovy = mysqli_query($connOdchovy, $queryOdchovy);
+
+if (!$resultCastrates || !$resultKocky || !$resultKocouri || !$resultClanky || !$resultOdchovy) {
     die("Query failed: " . mysqli_error($conn));
 }
 ?>
@@ -112,6 +116,26 @@ if (!$resultCastrates || !$resultKocky || !$resultKocouri || !$resultClanky) {
                 <td>
                     <a href="edit_article.php?id=<?= $row['id'] ?>">Upravit</a>
                     <a href="delete_article.php?id=<?= $row['id'] ?>" onclick="return confirm('Opravdu chcete smazat?')">Smazat</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
+
+    <h1>Správa odchovů</h1>
+    <a href="add_litter.php">Přidat odchov</a>
+    <table border="1">
+        <tr>
+            <th>Jméno</th>
+            <th>Obrázek</th>
+            <th>Akce</th>
+        </tr>
+        <?php while ($row = mysqli_fetch_assoc($resultOdchovy)): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['name']) ?></td>
+                <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="Obrázek" width="100"></td>
+                <td>
+                    <a href="edit_litter.php?id=<?= $row['id'] ?>">Upravit</a>
+                    <a href="delete_litter.php?id=<?= $row['id'] ?>" onclick="return confirm('Opravdu chcete smazat?')">Smazat</a>
                 </td>
             </tr>
         <?php endwhile; ?>

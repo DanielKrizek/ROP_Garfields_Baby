@@ -81,35 +81,50 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <div class="container">
         <?php
-        $batchSize = 26; // Každá řada má 26 vrhů (A-Z)
-        $totalBatches = ceil(count($litters) / $batchSize);
+        $batchNumber = 1;
+        $currentBatch = [];
 
-        for ($batch = 0; $batch < $totalBatches; $batch++) :
-            $start = $batch * $batchSize;
-            $end = min(($batch + 1) * $batchSize, count($litters));
+        foreach ($litters as $litter) {
+            $litterName = htmlspecialchars($litter['name']);
+            $letter = str_replace("vrh ", "", $litterName);
+
+            $currentBatch[] = $litter;
+
+            if (strtoupper($letter) === 'Z') {
+                echo "<h2>{$batchNumber}. řada vrhů</h2>";
+                echo "<div class='grid'>";
+                foreach ($currentBatch as $batchLitter) {
+                    $batchLitterName = htmlspecialchars($batchLitter['name']);
+                    $batchLetter = str_replace("vrh ", "", $batchLitterName);
+                    $link = "odchovy/{$batchNumber}_{$batchLetter}.php";
+                    echo "<div class='litter'>";
+                    echo "<h3>{$batchLitterName}</h3>";
+                    echo "<a href='{$link}'>";
+                    echo "<img src='" . htmlspecialchars($batchLitter['image_url']) . "' alt='{$batchLitterName}'>";
+                    echo "</a></div>";
+                }
+                echo "</div>";
+                $batchNumber++;
+                $currentBatch = [];
+            }
+        }
+
+        if (!empty($currentBatch)) {
+            echo "<h2>{$batchNumber}. řada vrhů</h2>";
+            echo "<div class='grid'>";
+            foreach ($currentBatch as $batchLitter) {
+                $batchLitterName = htmlspecialchars($batchLitter['name']);
+                $batchLetter = str_replace("vrh ", "", $batchLitterName);
+                $link = "odchovy/{$batchNumber}_{$batchLetter}.php";
+                echo "<div class='litter'>";
+                echo "<h3>{$batchLitterName}</h3>";
+                echo "<a href='{$link}'>";
+                echo "<img src='" . htmlspecialchars($batchLitter['image_url']) . "' alt='{$batchLitterName}'>";
+                echo "</a></div>";
+            }
+            echo "</div>";
+        }
         ?>
-
-            <h2><?= ($batch + 1) ?>. řada vrhů</h2>
-
-            <div class="grid">
-                <?php for ($i = $start; $i < $end; $i++) :
-                    $litterName = htmlspecialchars($litters[$i]['name']);
-                    $letter = str_replace("vrh ", "", $litterName); // Extrahuje písmeno
-                    $rowNumber = $batch + 1; // Řada začíná od 1
-
-                    // Vytvoří URL ve formátu "odchovy_X_Y.php"
-                    $link = "odchovy_{$rowNumber}_{$letter}.php";
-                ?>
-                    <div class="litter">
-                        <h3><?= $litterName ?></h3>
-                        <a href="<?= $link ?>">
-                            <img src="<?= htmlspecialchars($litters[$i]['image_url']) ?>" alt="<?= $litterName ?>">
-                        </a>
-                    </div>
-                <?php endfor; ?>
-            </div>
-
-        <?php endfor; ?>
     </div>
 
     <div id="imageModal" class="modal">

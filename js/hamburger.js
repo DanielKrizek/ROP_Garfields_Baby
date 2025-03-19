@@ -11,11 +11,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const hidePopupBtn = formPopup.querySelector(".close-btn");
     const signupLoginLink = formPopup.querySelectorAll(".bottom-link a");
 
-    // Add main page link to mobile menu
-    const mainPageLink = document.createElement("li");
-    mainPageLink.classList.add("mobile-only");
-    mainPageLink.innerHTML = '<a href="index.php">Hlavní stránka</a>';
-    navbarMenu.insertBefore(mainPageLink, navbarMenu.firstChild);
+    // Add main page link to mobile menu only if not on index.php
+    if (!window.location.pathname.endsWith("index.php")) {
+        const mainPageLink = document.createElement("li");
+        mainPageLink.classList.add("mobile-only");
+        mainPageLink.innerHTML = '<a href="../index.php">Hlavní stránka</a>';
+        navbarMenu.insertBefore(mainPageLink, navbarMenu.firstChild);
+    }
 
     // Show mobile menu
     hamburgerBtn.addEventListener("click", () => {
