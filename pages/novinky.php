@@ -15,11 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['login'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $error = login($conn, $username, $password);
+        $error = login($connUsers, $username, $password);
     } elseif (isset($_POST['signup'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $message = signup($conn, $username, $password);
+        $message = signup($connUsers, $username, $password);
     } elseif (isset($_POST['lang-select'])) {
         $_SESSION['lang'] = $_POST['lang-select'];
     }
@@ -39,10 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/navbar.css">
-    <link rel="stylesheet" href="../styles/grid.css">
     <link rel="stylesheet" href="../styles/modal.css">
     <link rel="stylesheet" href="../styles/news.css">
-    <link rel="stylesheet" href="../styles/">
     <script src="https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js"></script>
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>

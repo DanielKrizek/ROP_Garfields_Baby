@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="styles/navbar.css">
     <script src="js/hamburger.js" defer></script>
     <script src="js/script.js" defer></script>
+    <script src="js/modal.js" defer></script>
 </head>
 
 <body>

@@ -30,48 +30,73 @@ function logout()
 
 function login($conn, $username, $password)
 {
-    $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
-    $result = mysqli_query($conn, $query);
+    // Validate username
+    if (!preg_match('/^[a-zA-Z0-9._]+$/', $username)) {
+        echo "<script>alert('" . htmlspecialchars('Uživatelské jméno může obsahovat pouze písmena, číslice, tečky a podtržítka.') . "');</script>";
+        echo "<script>window.location.href = '" . htmlspecialchars($_SERVER['PHP_SELF']) . "';</script>";
+        return;
+    }
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $user_data = mysqli_fetch_assoc($result);
+    $username = htmlspecialchars($username); // Escape input
+    $query = "SELECT * FROM users WHERE username = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $user_data = $result->fetch_assoc();
         if (password_verify($password, $user_data['password'])) {
             $_SESSION['user_id'] = $user_data['user_id'];
-            $_SESSION['username'] = $user_data['username'];
-            $_SESSION['role'] = $user_data['role']; // Set the role in the session
+            $_SESSION['username'] = htmlspecialchars($user_data['username']); // Escape output
+            $_SESSION['role'] = htmlspecialchars($user_data['role']); // Escape output
 
             header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']));
             die;
         }
     }
-    echo "<script>alert('Neplatné uživatelské jméno nebo heslo');</script>";
+    echo "<script>alert('" . htmlspecialchars('Neplatné uživatelské jméno nebo heslo') . "');</script>";
     echo "<script>window.location.href = '" . htmlspecialchars($_SERVER['PHP_SELF']) . "';</script>";
     return;
 }
 
 function signup($conn, $username, $password)
 {
-    $query = "select * from users where username = '$username' limit 1";
-    $result = mysqli_query($conn, $query);
+    // Validate username
+    if (!preg_match('/^[a-zA-Z0-9._]+$/', $username)) {
+        echo "<script>alert('" . htmlspecialchars('Uživatelské jméno může obsahovat pouze písmena, číslice, tečky a podtržítka.') . "');</script>";
+        echo "<script>window.location.href = window.location.href;</script>";
+        return;
+    }
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        echo "<script>alert('Uživatelské jméno je již zabráno');</script>";
+    $username = htmlspecialchars($username); // Escape input
+    $query = "SELECT * FROM users WHERE username = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        echo "<script>alert('" . htmlspecialchars('Uživatelské jméno je již zabráno') . "');</script>";
         echo "<script>window.location.href = window.location.href;</script>";
         return;
     }
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $query = "insert into users (username, password) values ('$username', '$hashed_password')";
-    if (mysqli_query($conn, $query)) {
-        // Fetch the newly created user data
-        $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
-        $result = mysqli_query($conn, $query);
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user_data = mysqli_fetch_assoc($result);
-            // Log in the user
+    $query = "INSERT INTO users (username, password) VALUES (?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ss", $username, $hashed_password);
+    if ($stmt->execute()) {
+        $query = "SELECT * FROM users WHERE username = ? LIMIT 1";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+            $user_data = $result->fetch_assoc();
             $_SESSION['user_id'] = $user_data['user_id'];
-            $_SESSION['username'] = $user_data['username'];
-            $_SESSION['role'] = $user_data['role']; // Set the role in the session
+            $_SESSION['username'] = htmlspecialchars($user_data['username']); // Escape output
+            $_SESSION['role'] = htmlspecialchars($user_data['role']); // Escape output
 
             echo "<script>window.location.href = '" . htmlspecialchars($_SERVER['PHP_SELF']) . "';</script>";
             return;

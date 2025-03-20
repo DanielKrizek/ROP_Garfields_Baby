@@ -81,48 +81,28 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <div class="container">
         <?php
-        $batchNumber = 1;
-        $currentBatch = [];
-
+        $currentBatch = null;
         foreach ($litters as $litter) {
-            $litterName = htmlspecialchars($litter['name']);
-            $letter = str_replace("vrh ", "", $litterName);
-
-            $currentBatch[] = $litter;
-
-            if (strtoupper($letter) === 'Z') {
-                echo "<h2>{$batchNumber}. řada vrhů</h2>";
-                echo "<div class='grid'>";
-                foreach ($currentBatch as $batchLitter) {
-                    $batchLitterName = htmlspecialchars($batchLitter['name']);
-                    $batchLetter = str_replace("vrh ", "", $batchLitterName);
-                    $link = "odchovy/{$batchNumber}_{$batchLetter}.php";
-                    echo "<div class='litter'>";
-                    echo "<h3>{$batchLitterName}</h3>";
-                    echo "<a href='{$link}'>";
-                    echo "<img src='" . htmlspecialchars($batchLitter['image_url']) . "' alt='{$batchLitterName}'>";
-                    echo "</a></div>";
+            if ($litter['batch_number'] !== $currentBatch) {
+                if ($currentBatch !== null) {
+                    echo "</div>"; // Uzavření předchozí řady
                 }
-                echo "</div>";
-                $batchNumber++;
-                $currentBatch = [];
+                echo "<h2>{$litter['batch_number']}. řada vrhů</h2>";
+                echo "<div class='grid'>";
+                $currentBatch = $litter['batch_number'];
             }
+
+            $litterName = htmlspecialchars($litter['name']);
+            $link = "litter_detail.php?id=" . htmlspecialchars($litter['id']);
+            echo "<div class='litter'>";
+            echo "<h3>{$litterName}</h3>";
+            echo "<a href='{$link}'>";
+            echo "<img src='" . htmlspecialchars($litter['image_url']) . "' alt='{$litterName}'>";
+            echo "</a></div>";
         }
 
-        if (!empty($currentBatch)) {
-            echo "<h2>{$batchNumber}. řada vrhů</h2>";
-            echo "<div class='grid'>";
-            foreach ($currentBatch as $batchLitter) {
-                $batchLitterName = htmlspecialchars($batchLitter['name']);
-                $batchLetter = str_replace("vrh ", "", $batchLitterName);
-                $link = "odchovy/{$batchNumber}_{$batchLetter}.php";
-                echo "<div class='litter'>";
-                echo "<h3>{$batchLitterName}</h3>";
-                echo "<a href='{$link}'>";
-                echo "<img src='" . htmlspecialchars($batchLitter['image_url']) . "' alt='{$batchLitterName}'>";
-                echo "</a></div>";
-            }
-            echo "</div>";
+        if (!empty($litters)) {
+            echo "</div>"; // Uzavření poslední řady
         }
         ?>
     </div>
