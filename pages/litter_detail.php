@@ -81,6 +81,7 @@ if (isset($_GET['id'])) {
                     echo "<h3>" . htmlspecialchars($cat['name']) . "</h3>";
                     echo "<p>" . htmlspecialchars($cat['description']) . "</p>";
                     echo "<p><strong>Kód:</strong> " . htmlspecialchars($cat['color_code']) . "</p>";
+                    echo "<p><strong>Status:</strong> " . htmlspecialchars($cat['status']) . "</p>";
 
                     // Načtení obrázků pro dané kotě
                     $sqlImages = "SELECT * FROM kotata_obrazky WHERE kitten_id = ?";
