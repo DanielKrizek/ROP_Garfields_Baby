@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garfields Baby</title>
+    <title><?php echo translate('view_toms'); ?></title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/Header.css">
@@ -60,7 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <div class="blocks-row">
         <?php
         // Dotaz na kočky z databáze
-        $query = "SELECT * FROM toms";
+        $query = "
+            SELECT name, main_image, gallery_images, birth_date, 
+                   " . ($_SESSION['lang'] == 'en' ? "color_pattern_en" : "color_pattern") . " AS color_pattern, 
+                   color_code, mother, father 
+            FROM toms
+        ";
         $result = mysqli_query($conn, $query);
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -78,10 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             echo '    <div class="info">';
             echo '        <strong>' . $row['name'] . '</strong><br>';
             echo '        ' . date('j. n. Y', strtotime($row['birth_date'])) . '<br>';
-            echo '        ' . $row['color_pattern'] . '<br> (' . $row['breed_code'] . ')<br>';
-            echo '        <strong>Rodokmen</strong><br>';
-            echo '        Matka: ' . $row['mother'] . '<br>';
-            echo '        Otec: ' . $row['father'] . '<br>';
+            echo '        ' . $row['color_pattern'] . '<br> (' . $row['color_code'] . ')<br>';
+            echo '        <strong>' . translate('pedigree') . '</strong><br>';
+            echo '        ' . translate('mother') . ': ' . $row['mother'] . '<br>';
+            echo '        ' . translate('father') . ': ' . $row['father'] . '<br>';
             echo '    </div>';
             echo '</div>';
         }
@@ -89,10 +94,36 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     </div>
 
     <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
         <div class="modal-content-wrapper">
             <img class="modal-content" id="modalImage">
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("imageModal");
+            const modalImage = document.getElementById("modalImage");
+            const closeModal = document.querySelector(".modal .close");
+
+            document.querySelectorAll(".enlargeable").forEach(image => {
+                image.addEventListener("click", () => {
+                    modal.style.display = "block";
+                    modalImage.src = image.src;
+                });
+            });
+
+            closeModal.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
 
 </body>
 

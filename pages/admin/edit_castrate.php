@@ -17,25 +17,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $birth_date = $_POST['birth_date'];
     $color_pattern = $_POST['color_pattern'];
-    $breed_code = $_POST['breed_code'];
-    $main_image = $_POST['main_image'];
-    $gallery_images = $_POST['gallery_images'];
+    $color_code = $_POST['color_code'];
 
-    $stmt = $conn->prepare("UPDATE castrates SET name=?, birth_date=?, color_pattern=?, breed_code=?, main_image=?, gallery_images=? WHERE id=?");
-    $stmt->bind_param("ssssssi", $name, $birth_date, $color_pattern, $breed_code, $main_image, $gallery_images, $id);
+    // Handle main image upload
+    if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = "../../../img/castrates/";
+        $fileName = basename($_FILES['main_image']['name']);
+        $targetFilePath = $uploadDir . $fileName;
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        if (move_uploaded_file($_FILES['main_image']['tmp_name'], $targetFilePath)) {
+            $main_image = "../img/castrates/" . $fileName;
+
+            $oldFilePath = "../../" . $row['main_image'];
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
+        } else {
+            die("Chyba při nahrávání hlavního obrázku.");
+        }
+    } else {
+        $main_image = $row['main_image'];
+    }
+
+    // Handle gallery images upload
+    $gallery_images = [];
+    if (isset($_FILES['gallery_images']) && count($_FILES['gallery_images']['name']) > 0) {
+        $uploadDir = "../../../img/castrates/";
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        foreach ($_FILES['gallery_images']['name'] as $key => $fileName) {
+            if ($_FILES['gallery_images']['error'][$key] === UPLOAD_ERR_OK) {
+                $targetFilePath = $uploadDir . basename($fileName);
+                if (move_uploaded_file($_FILES['gallery_images']['tmp_name'][$key], $targetFilePath)) {
+                    $gallery_images[] = "../img/castrates/" . $fileName;
+                }
+            }
+        }
+    }
+
+    $gallery_images_path = implode(",", $gallery_images); // Combine paths with commas
+    if (empty($gallery_images_path)) {
+        $gallery_images_path = $row['gallery_images']; // Keep existing paths if no new images are uploaded
+    }
+
+    $stmt = $conn->prepare("UPDATE castrates SET name=?, birth_date=?, color_pattern=?, color_code=?, main_image=?, gallery_images=? WHERE id=?");
+    $stmt->bind_param("ssssssi", $name, $birth_date, $color_pattern, $color_code, $main_image, $gallery_images_path, $id);
     $stmt->execute();
 
-    header("Location: admin_panel.php");
+    header("Location: manage_castrates.php");
     exit();
 }
 ?>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
+    <a href="manage_castrates.php">Zpět na správu kastrátů</a><br><br> <!-- Link back to kittens management -->
     <input type="text" name="name" value="<?= htmlspecialchars($row['name']) ?>" required><br>
     <input type="date" name="birth_date" value="<?= $row['birth_date'] ?>" required><br>
     <input type="text" name="color_pattern" value="<?= htmlspecialchars($row['color_pattern']) ?>" required><br>
-    <input type="text" name="breed_code" value="<?= htmlspecialchars($row['breed_code']) ?>" required><br>
-    <input type="text" name="main_image" value="<?= htmlspecialchars($row['main_image']) ?>"><br>
-    <input type="text" name="gallery_images" value="<?= htmlspecialchars($row['gallery_images']) ?>"><br>
+    <input type="text" name="color_code" value="<?= htmlspecialchars($row['color_code']) ?>" required><br>
+    <label for="main_image">Hlavní obrázek:</label>
+    <input type="file" id="main_image" name="main_image" accept="image/*">
+    <br>
+    <?php if ($row['main_image']): ?>
+        <img src="../../<?= htmlspecialchars($row['main_image']) ?>" alt="Hlavní obrázek" width="100">
+    <?php endif; ?>
+    <br>
+    <label for="gallery_images">Galerie obrázků:</label>
+    <input type="file" id="gallery_images" name="gallery_images[]" accept="image/*" multiple>
+    <br>
+    <?php if ($row['gallery_images']): ?>
+        <?php foreach (explode(",", $row['gallery_images']) as $gallery_image): ?>
+            <img src="../../<?= htmlspecialchars($gallery_image) ?>" alt="Galerie obrázek" width="50">
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <br>
     <button type="submit">Uložit změny</button>
 </form>

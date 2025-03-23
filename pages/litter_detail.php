@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
     if ($resultLitter->num_rows > 0) {
         $litter = $resultLitter->fetch_assoc();
     } else {
-        die("Vrh nebyl nalezen.");
+        die(translate('litter_not_found'));
     }
 
     // Načtení koček pro daný vrh
@@ -34,7 +34,21 @@ if (isset($_GET['id'])) {
         $cats[] = $row;
     }
 } else {
-    die("ID vrhu nebylo specifikováno.");
+    die(translate('litter_id_not_specified'));
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['login'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $error = login($connUsers, $username, $password);
+    } elseif (isset($_POST['signup'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $message = signup($connUsers, $username, $password);
+    } elseif (isset($_POST['lang-select'])) {
+        $_SESSION['lang'] = $_POST['lang-select'];
+    }
 }
 ?>
 
@@ -66,11 +80,12 @@ if (isset($_GET['id'])) {
     <?php include("logForm.php"); ?>
 
     <div class="container">
+        <a href="odchovy.php" class="back-link"><?php echo translate('back_to_odchovy'); ?></a>
         <h1><?php echo ucfirst(htmlspecialchars($litter['name'])); ?></h1>
 
         <div class="litter-parents">
-            <p><strong>Matka:</strong> <?php echo htmlspecialchars($litter['mother_name']); ?></p>
-            <p><strong>Otec:</strong> <?php echo htmlspecialchars($litter['father_name']); ?></p>
+            <p><strong><?php echo translate('mother') ?>:</strong> <?php echo htmlspecialchars($litter['mother_name']); ?></p>
+            <p><strong><?php echo translate('father') ?>:</strong> <?php echo htmlspecialchars($litter['father_name']); ?></p>
         </div>
 
         <div class="cat-grid">
@@ -79,9 +94,13 @@ if (isset($_GET['id'])) {
                 foreach ($cats as $cat) {
                     echo "<div class='cat'>";
                     echo "<h3>" . htmlspecialchars($cat['name']) . "</h3>";
-                    echo "<p>" . htmlspecialchars($cat['description']) . "</p>";
-                    echo "<p><strong>Kód:</strong> " . htmlspecialchars($cat['color_code']) . "</p>";
-                    echo "<p><strong>Status:</strong> " . htmlspecialchars($cat['status']) . "</p>";
+                    // Display description based on selected language
+                    $descriptionField = ($_SESSION['lang'] === 'en') ? 'description_en' : 'description';
+                    echo "<p><strong>" . translate('color') . ":</strong> " . htmlspecialchars($cat[$descriptionField]) . "</p>";
+                    echo "<p><strong>" . translate('ems_code') . ":</strong> " . htmlspecialchars($cat['color_code']) . "</p>";
+                    echo "<p><strong>" . translate('status') . ":</strong> <span class='" .
+                        (strtolower($cat['status']) === 'volná' ? 'status-available' : 'status-unavailable') .
+                        "'>" . htmlspecialchars($cat['status']) . "</span></p>";
 
                     // Načtení obrázků pro dané kotě
                     $sqlImages = "SELECT * FROM kotata_obrazky WHERE kitten_id = ?";
@@ -97,22 +116,49 @@ if (isset($_GET['id'])) {
                         }
                         echo "</div>";
                     } else {
-                        echo "<p>Pro toto kotě nebyly nalezeny žádné obrázky.</p>";
+                        echo "<p>" . translate('no_images_found') . "</p>";
                     }
 
                     echo "</div>";
                 }
             } else {
-                echo "<p>Pro tento vrh nebyly nalezeny žádné kočky.</p>";
+                echo "<p>" . translate('no_cats_found') . "</p>";
             }
             ?>
         </div>
 
         <div id="imageModal" class="modal">
+            <span class="close">&times;</span>
             <div class="modal-content-wrapper">
                 <img class="modal-content" id="modalImage">
             </div>
         </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("imageModal");
+            const modalImage = document.getElementById("modalImage");
+            const closeModal = document.querySelector(".modal .close");
+
+            document.querySelectorAll(".enlargeable").forEach(image => {
+                image.addEventListener("click", () => {
+                    modal.style.display = "block";
+                    modalImage.src = image.src;
+                });
+            });
+
+            closeModal.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

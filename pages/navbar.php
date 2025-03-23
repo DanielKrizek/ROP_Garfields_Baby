@@ -21,7 +21,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <!-- Odkaz na admin panel (zobrazí se pouze adminům) -->
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                <li><a id="navbar-admin" href="admin/admin_panel.php" class="<?= ($current_page == 'admin/admin_panel.php') ? 'active' : '' ?>">Admin</a></li>
+                <li><a id="navbar-admin" href="admin/index.php" class="<?= ($current_page == 'admin/admin_panel.php') ? 'active' : '' ?>">Admin</a></li>
             <?php endif; ?>
         </ul>
 

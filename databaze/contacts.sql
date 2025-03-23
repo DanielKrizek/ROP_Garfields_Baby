@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Pát 07. bře 2025, 18:40
+-- Vytvořeno: Pon 24. bře 2025, 00:40
 -- Verze serveru: 10.4.32-MariaDB
 -- Verze PHP: 8.2.12
 
@@ -42,7 +42,10 @@ CREATE TABLE `contacts` (
 INSERT INTO `contacts` (`id`, `name`, `email`, `message`, `created_at`) VALUES
 (1, 'Dani', 'dani@dani.dani', 'Ahoj', '2025-03-07 16:41:47'),
 (2, 'Dani', 'dani@dani.dani', 'Ahojky', '2025-03-07 16:46:03'),
-(3, 'Zloun', 'zloun@zloun.zloun', 'Jsem zlej', '2025-03-07 17:37:12');
+(3, 'Zloun', 'zloun@zloun.zloun', 'Jsem zlej', '2025-03-07 17:37:12'),
+(4, 'asdasdasd', 'dasdas@d.d', 'dasdasd', '2025-03-10 14:53:20'),
+(5, 'dsadasd111', 'das@asdasd.cz', 'sdfg', '2025-03-10 15:05:33'),
+(6, 'vrh KOKOT', 'dasdas@dfdf.fff', 'asdasd', '2025-03-20 12:01:45');
 
 --
 -- Indexy pro exportované tabulky
@@ -62,7 +65,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT pro tabulku `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,6 +1,5 @@
 main {
     display: flex;
-    justify-content: center;
     padding: 20px;
 }
 
@@ -11,6 +10,7 @@ main {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     width: 100%;
+    text-align: left; /* Přidáno */
 }
 
 .description h2 {
@@ -19,6 +19,7 @@ main {
     padding-bottom: 5px;
     margin-bottom: 15px;
     margin-top: 40px;
+    text-align: center; /* Přidáno */
 }
 
 .description h2:first-child {
@@ -27,16 +28,19 @@ main {
     padding-bottom: 5px;
     margin-bottom: 15px;
     margin-top: 0;
+    text-align: center; /* Přidáno */
 }
 
 .description p {
     color: #000000;
     line-height: 1.6;
+    text-align: left; /* Přidáno */
 }
 
 .description ul {
     list-style-type: none;
     padding: 0;
+    text-align: center; /* Přidáno */
 }
 
 .description ul li {
@@ -45,6 +49,7 @@ main {
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
+    text-align: center; /* Přidáno */
 }
 
 .description ul li::before {

@@ -4,53 +4,6 @@ body {
     padding: 0;
 }
 
-#profile-h2 {
-    text-align: center;
-    margin-top: 20px;
-    color: #444;
-    font-size: 24px;
-}
-
-#profile-edit-form {
-    max-width: 400px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#profile-edit-form label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
-}
-
-#profile-edit-form input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-#profile-edit-form button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background-color: #ff6600;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#profile-edit-form button:hover {
-    background-color: #e55a00;
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -62,10 +15,29 @@ body {
 }
 
 .container h2 {
-    text-decoration: underline overline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 5px;
-    text-overline-offset: 5px;
+    position: relative;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 6px;
+    width: 100%;
+}
+
+.container h2::before,
+.container h2::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px; /* Tloušťka čáry */
+    background-color: black; /* Barva čáry */
+}
+
+.container h2::before {
+    top: -3px;
+}
+
+.container h2::after {
+    bottom: 0;
 }
 
 .grid {

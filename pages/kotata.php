@@ -1,20 +1,97 @@
 <?php
 session_start();
 
+// Nastavení výchozího jazyka, pokud není nastaven
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'cs'; // cs pro češtinu, en pro angličtinu
+}
+
 include("../php/connection.php");
 include("../php/functions.php");
 
+$conn = new mysqli("localhost", "root", "", "odchovy");
+$connUsers = new mysqli("localhost", "root", "", "login");
+
+$kotata = [];
+$defaultKotata = [];
+
+// Fetch all kittens with status "VOLNÁ" by default
+$stmt = $conn->prepare("
+    SELECT k.id AS kitten_id, k.name, k.color_code, k.status, 
+           " . ($_SESSION['lang'] == 'en' ? "k.description_en" : "k.description") . " AS description, 
+           ko.image_url, l.batch_number, l.name AS litter_name
+    FROM kotata k
+    LEFT JOIN kotata_obrazky ko ON k.id = ko.kitten_id
+    LEFT JOIN litters l ON k.litter_id = l.id
+    WHERE k.status = 'VOLNÁ'
+");
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $defaultKotata[$row['kitten_id']]['details'] = [
+        'name' => $row['name'],
+        'color_code' => $row['color_code'],
+        'status' => $row['status'],
+        'description' => $row['description'],
+        'batch_number' => $row['batch_number'],
+        'litter_name' => $row['litter_name']
+    ];
+    $defaultKotata[$row['kitten_id']]['images'][] = $row['image_url'];
+}
+$stmt->close();
+
+// Načtení vyhledávacího kritéria z URL, pokud existuje
+if (isset($_GET['search'])) {
+    $_SESSION['search_color_code'] = $_GET['search'];
+    $color_code = $_GET['search'];
+
+    // Proveďte vyhledávání
+    $stmt = $conn->prepare("
+        SELECT k.id AS kitten_id, k.name, k.color_code, k.status, 
+               " . ($_SESSION['lang'] == 'en' ? "k.description_en" : "k.description") . " AS description, 
+               ko.image_url, l.batch_number, l.name AS litter_name
+        FROM kotata k
+        LEFT JOIN kotata_obrazky ko ON k.id = ko.kitten_id
+        LEFT JOIN litters l ON k.litter_id = l.id
+        WHERE k.color_code LIKE ?
+    ");
+    $searchTerm = "%" . $color_code . "%";
+    $stmt->bind_param("s", $searchTerm);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $kotata = [];
+    while ($row = $result->fetch_assoc()) {
+        $kotata[$row['kitten_id']]['details'] = [
+            'name' => $row['name'],
+            'color_code' => $row['color_code'],
+            'status' => $row['status'],
+            'description' => $row['description'],
+            'batch_number' => $row['batch_number'],
+            'litter_name' => $row['litter_name']
+        ];
+        $kotata[$row['kitten_id']]['images'][] = $row['image_url'];
+    }
+    $stmt->close();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    if (isset($_POST['login'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $error = login($conn, $username, $password);
-    } elseif (isset($_POST['signup'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $message = signup($conn, $username, $password);
+    if (isset($_POST['search'])) {
+        $color_code = $_POST['color_code'];
+        $_SESSION['search_color_code'] = $color_code; // Uložení do session
+        header("Location: " . $_SERVER['PHP_SELF'] . "?search=" . urlencode($color_code));
+        exit();
+    } elseif (isset($_POST['reset'])) {
+        unset($_SESSION['search_color_code']); // Smazání z session
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     } elseif (isset($_POST['lang-select'])) {
         $_SESSION['lang'] = $_POST['lang-select'];
+        $redirectUrl = $_SERVER['PHP_SELF'];
+        if (isset($_SESSION['search_color_code'])) {
+            $redirectUrl .= "?search=" . urlencode($_SESSION['search_color_code']);
+        }
+        header("Location: " . $redirectUrl);
+        exit();
     }
 }
 ?>
@@ -25,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garfields Baby</title>
+    <title><?php echo translate('kitten_search_title'); ?></title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/Header.css">
@@ -34,11 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="stylesheet" href="../styles/grid.css">
     <link rel="stylesheet" href="../styles/modal.css">
+    <link rel="stylesheet" href="../styles/search.css">
     <script src="https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js"></script>
     <script src="../js/hamburger.js" defer></script>
     <script src="../js/script.js" defer></script>
     <script src="../js/modal.js" defer></script>
-
 </head>
 
 <body>
@@ -48,546 +125,107 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <?php include("logForm.php"); ?>
 
+    <main>
+        <h1><?php echo translate('kitten_search_heading'); ?></h1>
+        <form method="POST" class="search-form">
+            <label for="color_code"><?php echo translate('ems_code'); ?>:</label>
+            <input type="text" id="color_code" name="color_code" placeholder="<?php echo translate('enter_ems_code'); ?>" value="<?= isset($_SESSION['search_color_code']) ? htmlspecialchars($_SESSION['search_color_code']) : '' ?>">
+            <p class="info-link" id="colorCodeInfo"><?php echo translate('color_code_info'); ?></p>
+            <button type="submit" name="search"><?php echo translate('search_button'); ?></button>
+            <button type="submit" class="reset" name="reset"><?php echo translate('reset_button'); ?></button>
+        </form>
 
-    <div class="blocks-row">
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/zucchero_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/zucchero_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/zucchero_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/zucchero_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/zucchero_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>ZUCCHERO A LYNX STAR</strong><br>
-                19. 8. 2018<br>
-                černá stříbřitá mramorovaná s bílou<br> (ns 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: Pillowtalk's Michigan<br>
-                Matka: Katherine Kerry A Lynx Star<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/loki_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/loki_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/loki_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/loki_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/loki_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>LOKI BLUE LAGUNA LEO</strong><br>
-                27. 5. 2016<br>
-                modrá s bílou<br> (a 09)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: ICH (WCF) Flip-Flop's Focus<br>
-                Matka: Marilyn Laguna Leo<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/lukas_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/lukas_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/lukas_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/lukas_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/lukas_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>LUKAS BACCARACOON</strong><br>
-                7. 9. 2013<br>
-                červená stříbřitá mramorovaná s bílou<br> (ds 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: ICH Fuzzy, Lavender Love<br>
-                Matka: Kalista Violet, Velvet Duckie<br>
+        <div id="infoModal" class="modal">
+            <span class="close">&times;</span>
+            <div class="modal-content-wrapper">
+                <div class="modal-contenter">
+                    <h2><?php echo translate('color_codes_title'); ?></h2>
+                    <p><?php echo translate('color_codes_description'); ?></p>
+                    <ul>
+                        <li><strong class="color-code" data-color="n">n</strong> <?php echo translate('color_black'); ?></li>
+                        <li><strong class="color-code" data-color="ns">ns</strong> <?php echo translate('color_black_silver'); ?></li>
+                        <li><strong class="color-code" data-color="a">a</strong> <?php echo translate('color_blue'); ?></li>
+                        <li><strong class="color-code" data-color="as">as</strong> <?php echo translate('color_blue_silver'); ?></li>
+                        <li><strong class="color-code" data-color="d">d</strong> <?php echo translate('color_red'); ?></li>
+                        <li><strong class="color-code" data-color="ds">ds</strong> <?php echo translate('color_red_silver'); ?></li>
+                        <li><strong class="color-code" data-color="e">e</strong> <?php echo translate('color_cream'); ?></li>
+                        <li><strong class="color-code" data-color="es">es</strong> <?php echo translate('color_cream_silver'); ?></li>
+                        <li><strong class="color-code" data-color="f">f</strong> <?php echo translate('color_tortie'); ?></li>
+                        <li><strong class="color-code" data-color="fs">fs</strong> <?php echo translate('color_tortie_silver'); ?></li>
+                        <li><strong class="color-code" data-color="g">g</strong> <?php echo translate('color_blue_tortie'); ?></li>
+                        <li><strong class="color-code" data-color="gs">gs</strong> <?php echo translate('color_blue_tortie_silver'); ?></li>
+                    </ul>
+                    <p><?php echo translate('color_code_silver_explanation'); ?></p>
+                    <h2><?php echo translate('exterior_codes_title'); ?></h2>
+                    <ul>
+                        <li><strong class="color-code" data-color="03">03</strong> <?php echo translate('exterior_bicolor'); ?></li>
+                        <li><strong class="color-code" data-color="22">22</strong> <?php echo translate('exterior_marble'); ?></li>
+                        <li><strong class="color-code" data-color="09">09</strong> <?php echo translate('exterior_white_spots'); ?></li>
+                        <li><strong class="color-code" data-color="23">23</strong> <?php echo translate('exterior_tabby'); ?></li>
+                        <li><strong class="color-code" data-color="24">24</strong> <?php echo translate('exterior_spotted'); ?></li>
+                    </ul>
+                    <h3><?php echo translate('examples_title'); ?></h3>
+                    <p><strong><?php echo translate('example_1'); ?>:</strong> <code>d22</code> <?php echo translate('example_1_description'); ?></p>
+                    <p><strong><?php echo translate('example_2'); ?>:</strong> <code>ds0922</code> <?php echo translate('example_2_description'); ?></p>
+                    <p><strong><?php echo translate('example_3'); ?>:</strong> <code>0922</code> <?php echo translate('example_3_description'); ?></p>
+                </div>
             </div>
         </div>
 
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/queeny_01.jpg" alt="kocka" class="enlargeable">
+        <?php if (!empty($kotata)): ?>
+            <div class="results">
+                <h2 class="vysledky"><?php echo translate('kittens_with_ems_code'); ?>: <?= isset($_SESSION['search_color_code']) ? htmlspecialchars($_SESSION['search_color_code']) : '' ?></h2>
+                <?php foreach ($kotata as $kitten): ?>
+                    <div class="kitten-box">
+                        <h3><?= htmlspecialchars($kitten['details']['name']) ?></h3>
+                        <p><strong><?php echo translate('ems_code'); ?>:</strong> <?= htmlspecialchars($kitten['details']['color_code']) ?></p>
+                        <p><strong><?php echo translate('color'); ?>:</strong> <?= htmlspecialchars($kitten['details']['description']) ?></p>
+                        <p>
+                            <strong><?php echo translate('status'); ?>:</strong>
+                            <span class="<?= $kitten['details']['status'] === 'VOLNÁ' ? 'status-green' : 'status-red' ?>">
+                                <?= htmlspecialchars($kitten['details']['status']) ?>
+                            </span>
+                        </p>
+                        <p><strong><?php echo translate('litter'); ?>:</strong> <?= htmlspecialchars($kitten['details']['litter_name']) ?></p>
+                        <p><strong><?php echo translate('batch_number'); ?>:</strong> <?= htmlspecialchars($kitten['details']['batch_number']) ?></p>
+                        <div class="kitten-images">
+                            <?php foreach ($kitten['images'] as $image_url): ?>
+                                <?php if (!empty($image_url)): ?>
+                                    <img src="<?= htmlspecialchars($image_url) ?>" alt="Obrázek koťátka" class="kitten-image enlargeable">
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/queeny_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/queeny_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/queeny_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/queeny_05.jpg" alt="kocka" class="enlargeable"></div>
+        <?php else: ?>
+            <div class="results">
+                <h2 class="vysledky"><?php echo translate('available_kittens'); ?></h2>
+                <?php foreach ($defaultKotata as $kitten): ?>
+                    <div class="kitten-box">
+                        <h3><?= htmlspecialchars($kitten['details']['name']) ?></h3>
+                        <p><strong><?php echo translate('ems_code'); ?>:</strong> <?= htmlspecialchars($kitten['details']['color_code']) ?></p>
+                        <p><strong><?php echo translate('color'); ?>:</strong> <?= htmlspecialchars($kitten['details']['description']) ?></p>
+                        <p>
+                            <strong><?php echo translate('status'); ?>:</strong>
+                            <span class="<?= $kitten['details']['status'] === 'VOLNÁ' ? 'status-green' : 'status-red' ?>">
+                                <?= htmlspecialchars($kitten['details']['status']) ?>
+                            </span>
+                        </p>
+                        <p><strong><?php echo translate('litter'); ?>:</strong> <?= htmlspecialchars($kitten['details']['litter_name']) ?></p>
+                        <p><strong><?php echo translate('batch_number'); ?>:</strong> <?= htmlspecialchars($kitten['details']['batch_number']) ?></p>
+                        <div class="kitten-images">
+                            <?php foreach ($kitten['images'] as $image_url): ?>
+                                <?php if (!empty($image_url)): ?>
+                                    <img src="<?= htmlspecialchars($image_url) ?>" alt="Obrázek koťátka" class="kitten-image enlargeable">
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <div class="info">
-                <strong>QUEENY BELLA A LYNX STAR</strong><br>
-                20. 1. 2016<br>
-                modrá mramorovaná s bílou<br> (a 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: Marylin Hairy Majesty<br>
-                Otec: Pillowtalk's Wannabe<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/ellen_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/ellen_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ellen_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ellen_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ellen_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>ELLEN A LYNX STAR</strong><br>
-                4. 10. 2011<br>
-                černě želvovinová mramorovaná<br> (f 22)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: Harmony Garfield's Baby<br>
-                Otec: Centaur Garfield's Baby<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/rebeka_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/rebeka_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/rebeka_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/rebeka_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/rebeka_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>REBEKA GARFIELD'S BABY</strong><br>
-                6. 1. 2012<br>
-                černě želvovinová tečkovaná s bílou<br> (f 09 24)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: CH Embee Garfield's Baby<br>
-                Otec: CH Zeus Sante d'Orsy<br>
-                <strong>Výstavy:</strong><br> ~ tř. 11 ~<br>
-                MVK Lysá nad Labem 24.11.2012 - V3<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/mauglina_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/mauglina_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/mauglina_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/mauglina_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/mauglina_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>MAUGLINA GARFIELD'S BABY</strong><br>
-                23. 7. 2011<br>
-                černá s bílou (n 09)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: CH Embee Garfield's Baby<br>
-                Otec: CH Alwaro King of Jewel<br>
-                <strong>Výstavy:</strong><br> ~ tř. 9 ~<br>
-                MVK Příbram 10.6.2012 - CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/chopper_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/chopper_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/chopper_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/chopper_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/chopper_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CHOPPER GARFIELD'S BABY</strong><br>
-                14. 9. 2015<br>
-                černá stříbřitá mramorovaná s bílou<br> (ns 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: Lukas Baccaracoon<br>
-                Matka: Ornela Garfield's Baby<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/emphaty_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/emphaty_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/emphaty_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/emphaty_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/emphaty_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CH EMPHATY GARFIELD'S BABY</strong><br>
-                19. 7. 2009<br>
-                černě želvovinová tygrovaná<br> (f 23)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: CH Dynamite of Rainbow Valley<br>
-                Otec: CH Iris of Pumelia Garden<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 11 ~ <br>MVK PYRAMIDA Praha 20.3.2010 - V1<br>
-                ~ tř. 9 ~ <br>MVK Praha 31.7.2010 - CAC<br>
-                MVK Pardubice 14.11.2010 - V2<br>
-                MVK Praha 16.1.2011 - CAC, nominace BIS<br>
-                MVK Praha 22.1.2012 - V1 CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/osiris_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/osiris_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/osiris_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/osiris_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/osiris_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>OSIRIS GARFIELD'S BABY</strong><br>
-                1. 8. 2011<br>
-                černě želvovinová stříbřitá tečkovaná s bílou<br> (fs 09 24)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: CH Empathy Garfield's Baby<br>
-                Otec: CH Alwaro King of Jewel<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~<br> MVK Příbram 10.6.2012 - V2<br>
-            </div>
-        </div>
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/ornela_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/ornela_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ornela_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ornela_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ornela_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>ORNELA GARFIELD'S BABY</strong><br>
-                1. 8. 2011<br>
-                černě želvovinová stříbřitá mramorovaná s bílou<br> (fs 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: CH Empathy Garfield's Baby<br>
-                Otec: CH Alwaro King of Jewel<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~<br> MVK Praha 29.7.2012 - CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/schery_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/schery_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/schery_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/schery_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/schery_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>SCHERY GARFIELD'S BABY</strong><br>
-                30. 12. 2016<br>
-                černá stříbřitá tečkovaná<br> (ns 24)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: CH Empathy Garfield's Baby<br>
-                Otec: Chopper Garfield's Baby<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/elis_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/elis_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/elis_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/elis_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/elis_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>ELIS GARFIELD'S BABY</strong><br>
-                12. 2. 2018<br>
-                černá mramorovaná<br> (n 22)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: Rebeka Garfield's Baby<br>
-                Otec: Loki Blue Laguna Leo<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/ajsa_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/ajsa_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ajsa_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ajsa_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/ajsa_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>ICH AJŠA GARFIELD'S BABY</strong><br>
-                20. 6. 2008<br>
-                červená stříbřitá mramorovaná<br> (ds 22)<br>
-                <strong>Rodokmen</strong><br>
-                Matka: Amia Magic Magpie<br>
-                Otec: CH Iris of Pumelia Garden<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~ <br>MVK STAR SHOW Praha 14.2.2010 - CAC<br>
-                MVK Manětín 28.2.2010 - V1 CAC<br>
-                MVK PYRAMIDA Praha 20.3.2010 - V1 CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/cleo_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/cleo_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/cleo_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/cleo_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/cleo_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CLEO WILD ROSE</strong><br>
-                20. 9. 2011<br>
-                modrá <br>(a)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: CH Edgar North Beauty<br>
-                Matka: CH Felicie Snow Garden<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~ <br>MVK Praha 29.7.2012 - CAC BIV Nominace BIS<br>
-                MVK Lysá nad Labem 24.11.2012 - CAC BIV<br>
-                MVK Lysá nad Labem 25.11.2012 - CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/iris_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/iris_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/iris_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/iris_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/iris_02.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CH IRIS OF PUMELIA GARDEN</strong><br>
-                5. 8. 2006<br>
-                červený mramorovaný<br> (d 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: CH Elliot de Axis Star<br>
-                Matka: Evening Sun of Pumelia Garden<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 11 ~<br> MVK Praha 18.2.2007 - V1 BIV Nom.<br>
-                ~ tř. 9 ~<br> MVK Ústí n/L 14.7.2007 - CAC<br>
-                MVK Liberec 29.9.2007 - V2<br>
-                MVK Praha 16.2.2008 - CAC<br>
-                MVK Praha 14.2.2009 - V2<br>
-                MVK Praha 22.3.2009 - CAC BIV Nom.<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/david_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/david_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/david_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/david_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/david_02.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CH DAVID GOLIATH OF PÁBENÍ</strong><br>
-                23. 3. 2007<br>
-                modrý mramorovaný<br> (a 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: IC Dragon Main Bastet<br>
-                Matka: Patricie of Gentle Lions<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~<br> MVK Praha 16.2.2008 - CAC<br>
-                MVK Praha 14.2.2009 - V2<br>
-                MVK Praha 22.3.2009 - V2<br>
-                MVK Zdice 7.6.2009 - CAC<br>
-                MVK Ústí n/L 12.7.2009 - CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/king_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/king_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/king_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/king_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/king_03.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CH ALWARO KING OF JEVEL</strong><br>
-                8. 3. 2010<br>
-                černý stříbřitý mramorovaný s bílou<br> (ns 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: INT CH Wytopitlock H'Bono Madox<br>
-                Matka: Alwaro Victoria<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 11 ~ <br>MVK Praha 17.10.2010 V1<br>
-                ~ tř. 9 ~<br> MVK Praha 15.1.2011 - CAC<br>
-                MVK Praha 16.1.2011 - CAC<br>
-                MVK Praha 12.2.2011 - CAC<br>
-                ~ champion ~<br>MVK Praha 13.2.2011 - CACIB<br>
-                MVK Bratislava 13.3.2011 - CACIB BIV<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/merlin_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/merlin_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/merlin_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/merlin_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/merlin_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>MERLIN OF PUMELIA GARDEN</strong><br>
-                2. 2. 2011<br>
-                modrá mramorovaná s bílou <br>(a 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: Zeus Sante d'Orsy<br>
-                Matka: Christine Garfield's Baby<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/arleta_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/arleta_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/arleta_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/arleta_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/arleta_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>ARLETA GARFIELD'S BABY</strong><br>
-                20. 6. 2008<br>
-                červená stříbřitá mramorovaná<br> (ds 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: CH Iris of Pumelia Garden<br>
-                Matka: Amia Magic Magpie<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~<br> MVK Praha 13.12.2009 - V2<br>
-                MVK Praha 1.8.2010 - V2<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/amia_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/amia_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/amia_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/amia_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/amia_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>AMIA MAGIC MAGPIE</strong><br>
-                18. 10. 2006<br>
-                červená stříbřitá mramorovaná bikolor<br> (ds 03 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: CH Kelvin Klein z Larku<br>
-                Matka: Bianca Sante D'Orsy<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~<br> MVK Liberec 29.9.2007 - CAC<br>
-                MVK Praha 17.10.2009 - V2<br>
-                MVK Příbram 5.6.2010 - CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/arka_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/arka_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/arka_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/arka_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/arka_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CH ARKA GARFIELD'S BABY</strong><br>
-                20. 6. 2008<br>
-                červená stříbřitá mramorovaná s bílou<br> (ds 09 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: CH Iris of Pumelia Garden<br>
-                Matka: Amia Magic Magpie<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~ <br>MVK Most 17.5.2009 - CAC Nom.<br>
-                MVK Zdice 7.6.2009 - CAC<br>
-                MVK Ústí n/L 12.7.2009 - V2<br>
-                MVK Pardubice 15.11.2009 - CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/xtreme_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/xtreme_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/xtreme_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/xtreme_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/xtreme_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>CH X-TREME Z MATRIXU</strong><br>
-                23. 12. 2008<br>
-                modře želvovinová mramorovaná<br> (g 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: CH Eomer of Blooming Tree<br>
-                Matka: Penelope Hairy Majesty<br>
-                <strong>Výstavy:</strong><br>
-                ~ tř. 9 ~<br> MVK Pardubice 15.11.2009 - CAC<br>
-                MVK Praha 13.12.2009 - CAC BIV<br>
-                MVK Manětín 28.2.2010 - V2<br>
-                MVK Lysá nad Labem 26.11.2011 - V1 CAC<br>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="big-image">
-                <img src="../img/castrates/avalon_01.jpg" alt="kocka" class="enlargeable">
-            </div>
-            <div class="small-images">
-                <div class="small-image"><img src="../img/castrates/avalon_02.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/avalon_03.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/avalon_04.jpg" alt="kocka" class="enlargeable"></div>
-                <div class="small-image"><img src="../img/castrates/avalon_05.jpg" alt="kocka" class="enlargeable"></div>
-            </div>
-            <div class="info">
-                <strong>AVALON OF MASSLCATS</strong><br>
-                23. 12. 2013<br>
-                černá stříbřitá mramorovaná <br>(ns 22)<br>
-                <strong>Rodokmen</strong><br>
-                Otec: CH Top Coon Ayron<br>
-                Matka: IC Felis Admiranda Bastilla<br>
-            </div>
-        </div>
-    </div>
+        <?php endif; ?>
+    </main>
 
     <div id="imageModal" class="modal">
         <span class="close">&times;</span>
@@ -596,6 +234,54 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("imageModal");
+            const modalImage = document.getElementById("modalImage");
+            const closeModal = document.querySelector(".modal .close");
+
+            document.querySelectorAll(".enlargeable").forEach(image => {
+                image.addEventListener("click", () => {
+                    modal.style.display = "block";
+                    modalImage.src = image.src;
+                });
+            });
+
+            closeModal.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+
+            const infoModal = document.getElementById("infoModal");
+            const colorCodeInfo = document.getElementById("colorCodeInfo");
+
+            colorCodeInfo.addEventListener("click", () => {
+                infoModal.style.display = "block";
+            });
+
+            infoModal.querySelector(".close").addEventListener("click", () => {
+                infoModal.style.display = "none";
+            });
+
+            window.addEventListener("click", (event) => {
+                if (event.target === infoModal) {
+                    infoModal.style.display = "none";
+                }
+            });
+
+            document.querySelectorAll(".color-code").forEach(colorCode => {
+                colorCode.addEventListener("click", () => {
+                    document.getElementById("color_code").value = colorCode.dataset.color;
+                    infoModal.style.display = "none";
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

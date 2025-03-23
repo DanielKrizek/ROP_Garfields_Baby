@@ -95,7 +95,7 @@ header {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border: none;
     color: #333;
     padding: 10px 20px;
@@ -382,11 +382,10 @@ select {
     }
 
     .navbar .logout-btn {
-        width: 120px;
+        width: auto;
         font-size: 0.9rem;
     }
 }
-
 @media (max-width: 760px) {
     .form-popup {
         width: 95%;
@@ -404,17 +403,24 @@ select {
         font-size: 0.8rem;
         padding: 0 8px;
         height: 42px;
-        width: 140px;
+        width: 120px; /* Reduced width */
         white-space: nowrap;
+    }
+
+    .navbar .logout-btn {
+        width: auto;
+        font-size: 0.7rem; /* Reduced font size */
+        padding: 8px 16px; /* Adjusted padding */
+    }
+
+    select {
+        font-size: 0.8rem; /* Reduced font size */
+        padding: 2px; /* Adjusted padding */
+        margin: 0 10px; /* Reduced margin */
     }
 
     .navbar .links a:hover {
         color: #FF8DC7;
         font-size: 2rem;
-    }
-
-    .navbar .logout-btn {
-        width: 140px;
-        font-size: 0.8rem;
     }
 }

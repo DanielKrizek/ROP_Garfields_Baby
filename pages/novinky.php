@@ -10,7 +10,6 @@ $connUsers = new mysqli("localhost", "root", "", "login");
 $query = "SELECT * FROM news ORDER BY created_at DESC";
 $result = mysqli_query($conn, $query);
 
-
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['login'])) {
         $username = $_POST['username'];
@@ -80,7 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <section class="news-container">
             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                 <article class="news-item">
-                    <h3><?php echo htmlspecialchars($row['title']); ?></h3>
+                    <?php
+                    // Zjištění jazyka a výběr příslušného titulku a obsahu
+                    $title = ($_SESSION['lang'] == 'en') ? $row['title_en'] : $row['title'];
+                    $content = ($_SESSION['lang'] == 'en') ? $row['content_en'] : $row['content'];
+                    ?>
+                    <h3><?php echo htmlspecialchars($title); ?></h3>
                     <?php
                     if (!empty($row['image'])) {
                         $images = explode(',', $row['image']);
@@ -91,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         endforeach;
                     }
                     ?>
-                    <p><?php echo nl2br(htmlspecialchars($row['content'])); ?></p>
+                    <p><?php echo nl2br(htmlspecialchars($content)); ?></p>
                     <small><?php echo date("d.m.Y", strtotime($row['created_at'])); ?></small>
                 </article>
             <?php endwhile; ?>

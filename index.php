@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     <li><a id="navbar7" href="pages/kontakt.php"><?php echo translate('contact'); ?></a></li>
 
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                        <li><a id="navbar-admin" href="pages/admin/admin_panel.php" class="<?= ($current_page == 'pages/admin/admin_panel.php') ? 'active' : '' ?>">Admin</a></li>
+                        <li><a id="navbar-admin" href="pages/admin/index.php" class="<?= ($current_page == 'pages/admin/admin_panel.php') ? 'active' : '' ?>">Admin</a></li>
                     <?php endif; ?>
                 </ul>
 

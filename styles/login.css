@@ -14,7 +14,7 @@ button:hover {
 }
 
 .logout-btn, .login-btn {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border: none;
     color: #333;
     padding: 10px 20px;
@@ -212,5 +212,11 @@ select {
 
     .form-box .form-content {
         padding: 30px 20px;
+    }
+
+    select
+    {
+        padding: 3px;
+        margin-left: 0;
     }
 }

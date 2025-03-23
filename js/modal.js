@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImage");
-    const closeBtn = document.querySelector(".close"); // Use querySelector to select the close button
+    const closeBtn = modal.querySelector(".close"); // Ensure the close button is correctly selected
 
     document.querySelectorAll(".enlargeable").forEach(img => {
         img.addEventListener("click", function() {
@@ -22,9 +22,38 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     window.addEventListener("click", function(event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = "none";
             panzoom(modalImg).dispose(); // Dispose panzoom instance when closing modal
         }
+    });
+
+    const infoModal = document.getElementById("infoModal");
+    const infoLink = document.getElementById("colorCodeInfo");
+    const closeInfoModal = infoModal.querySelector(".close");
+
+    infoLink.addEventListener("click", function() {
+        infoModal.style.display = "block";
+    });
+
+    closeInfoModal.addEventListener("click", function() {
+        infoModal.style.display = "none";
+    });
+
+    window.addEventListener("click", function(event) {
+        if (event.target === infoModal) {
+            infoModal.style.display = "none";
+        }
+    });
+
+    document.querySelectorAll(".color-code").forEach(colorCode => {
+        colorCode.addEventListener("click", function() {
+            const color = this.dataset.color;
+            const searchInput = document.getElementById("color_code");
+            const infoModal = document.getElementById("infoModal");
+
+            searchInput.value = color; // Set the color code in the search input
+            infoModal.style.display = "none"; // Close the modal
+        });
     });
 });
