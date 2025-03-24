@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <a href="manage_litters.php">Zpět na správu odchovů</a> <!-- Link back to manage_litters -->
     <h1>Upravit odchov</h1>
     <form method="POST" enctype="multipart/form-data">
         <label for="name">Jméno:</label>

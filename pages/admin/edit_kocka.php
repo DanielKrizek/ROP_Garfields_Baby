@@ -76,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <form method="POST" enctype="multipart/form-data">
+    <a href="manage_cats.php">Zpět na správu koček</a> <!-- Link back to manage_cats -->
+    <br><br>
     <input type="text" name="name" value="<?= htmlspecialchars($row['name']) ?>" required><br>
     <input type="date" name="birth_date" value="<?= $row['birth_date'] ?>" required><br>
     <input type="text" name="color_pattern" value="<?= htmlspecialchars($row['color_pattern']) ?>" required><br>

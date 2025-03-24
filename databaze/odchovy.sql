@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Pon 24. bře 2025, 00:41
+-- Vytvořeno: Pon 24. bře 2025, 19:56
 -- Verze serveru: 10.4.32-MariaDB
 -- Verze PHP: 8.2.12
 
@@ -688,10 +688,6 @@ INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
 (14, 3, '../img/odchovy/kotata/1b/baltazar_04.jpg'),
 (15, 3, '../img/odchovy/kotata/1b/baltazar_05.jpg'),
 (16, 4, '../img/odchovy/kotata/1b/barley_01.jpg'),
-(17, 4, ''),
-(18, 4, ''),
-(19, 4, ''),
-(20, 4, ''),
 (21, 5, '../img/odchovy/kotata/1b/bina_01.jpg'),
 (22, 5, '../img/odchovy/kotata/1b/bina_02.jpg'),
 (23, 5, '../img/odchovy/kotata/1b/bina_03.jpg'),
@@ -703,10 +699,6 @@ INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
 (29, 6, '../img/odchovy/kotata/1b/barra_04.jpg'),
 (30, 6, '../img/odchovy/kotata/1b/barra_05.jpg'),
 (31, 7, '../img/odchovy/kotata/1b/bonnie_01.jpg'),
-(32, 7, '../img/odchovy/kotata/1b/bonnie_02.jpg'),
-(33, 7, '../img/odchovy/kotata/1b/bonnie_03.jpg'),
-(34, 7, '../img/odchovy/kotata/1b/bonnie_04.jpg'),
-(35, 7, '../img/odchovy/kotata/1b/bonnie_05.jpg'),
 (36, 8, '../img/odchovy/kotata/1c/cevin_01.jpg'),
 (37, 8, '../img/odchovy/kotata/1c/cevin_02.jpg'),
 (38, 8, '../img/odchovy/kotata/1c/cevin_03.jpg'),
@@ -735,13 +727,10 @@ INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
 (61, 13, '../img/odchovy/kotata/1c/christine_01.jpg'),
 (62, 13, '../img/odchovy/kotata/1c/christine_02.jpg'),
 (63, 13, '../img/odchovy/kotata/1c/christine_03.jpg'),
-(64, 13, ''),
-(65, 13, ''),
 (66, 14, '../img/odchovy/kotata/1c/cookie_01.jpg'),
 (67, 14, '../img/odchovy/kotata/1c/cookie_02.jpg'),
 (68, 14, '../img/odchovy/kotata/1c/cookie_03.jpg'),
 (69, 14, '../img/odchovy/kotata/1c/cookie_04.jpg'),
-(70, 14, ''),
 (71, 15, '../img/odchovy/kotata/1d/denis_01.jpg'),
 (72, 15, '../img/odchovy/kotata/1d/denis_02.jpg'),
 (73, 15, '../img/odchovy/kotata/1d/denis_03.jpg'),
@@ -1648,13 +1637,13 @@ INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
 (986, 232, '../img/odchovy/kotata/2z/zofie_01.jpg'),
 (987, 232, '../img/odchovy/kotata/2z/zofie_02.jpg'),
 (988, 232, '../img/odchovy/kotata/2z/zofie_03.jpg'),
-(989, 232, '../img/odchovy/kotata/2z/zofie_04.jpg');
-INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
+(989, 232, '../img/odchovy/kotata/2z/zofie_04.jpg'),
 (991, 233, '../img/odchovy/kotata/3a/aylin_01.jpg'),
 (992, 233, '../img/odchovy/kotata/3a/aylin_02.jpg'),
 (993, 233, '../img/odchovy/kotata/3a/aylin_03.jpg'),
 (994, 233, '../img/odchovy/kotata/3a/aylin_04.jpg'),
-(995, 233, '../img/odchovy/kotata/3a/aylin_05.jpg'),
+(995, 233, '../img/odchovy/kotata/3a/aylin_05.jpg');
+INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
 (996, 234, '../img/odchovy/kotata/3a/amaya_01.jpg'),
 (997, 234, '../img/odchovy/kotata/3a/amaya_02.jpg'),
 (998, 234, '../img/odchovy/kotata/3a/amaya_03.jpg'),
@@ -2594,13 +2583,13 @@ INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
 (2069, 448, '../img/odchovy/kotata/4s/sancho_04.jpg'),
 (2071, 449, '../img/odchovy/kotata/4s/seth_01.jpg'),
 (2072, 449, '../img/odchovy/kotata/4s/seth_02.jpg'),
-(2073, 449, '../img/odchovy/kotata/4s/seth_03.jpg');
-INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
+(2073, 449, '../img/odchovy/kotata/4s/seth_03.jpg'),
 (2074, 449, '../img/odchovy/kotata/4s/seth_04.jpg'),
 (2076, 450, '../img/odchovy/kotata/4s/salem_01.jpg'),
 (2077, 450, '../img/odchovy/kotata/4s/salem_02.jpg'),
 (2078, 450, '../img/odchovy/kotata/4s/salem_03.jpg'),
-(2079, 450, '../img/odchovy/kotata/4s/salem_04.jpg'),
+(2079, 450, '../img/odchovy/kotata/4s/salem_04.jpg');
+INSERT INTO `kotata_obrazky` (`id`, `kitten_id`, `image_url`) VALUES
 (2081, 451, '../img/odchovy/kotata/4s/sasha_01.jpg'),
 (2082, 451, '../img/odchovy/kotata/4s/sasha_02.jpg'),
 (2083, 451, '../img/odchovy/kotata/4s/sasha_03.jpg'),
