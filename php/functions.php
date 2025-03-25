@@ -62,6 +62,18 @@ function login($conn, $username, $password)
 
 function signup($conn, $username, $password)
 {
+    if (strlen($username) < 3) {
+        echo "<script>alert('" . htmlspecialchars('Username must be at least 3 characters long.') . "');</script>";
+        echo "<script>window.location.href = window.location.href;</script>";
+        return;
+    }
+
+    if (strlen($password) < 6) {
+        echo "<script>alert('" . htmlspecialchars('Password must be at least 6 characters long.') . "');</script>";
+        echo "<script>window.location.href = window.location.href;</script>";
+        return;
+    }
+
     // Validate username
     if (!preg_match('/^[a-zA-Z0-9._]+$/', $username)) {
         echo "<script>alert('" . htmlspecialchars('Uživatelské jméno může obsahovat pouze písmena, číslice, tečky a podtržítka.') . "');</script>";

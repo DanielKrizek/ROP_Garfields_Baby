@@ -7,8 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (strlen($password) < 4) {
-        $message = "Password must be at least 4 characters long.";
+    if (strlen($username) < 3) {
+        $message = "Username must be at least 3 characters long.";
+    } elseif (strlen($password) < 6) {
+        $message = "Password must be at least 6 characters long.";
     } else {
         $message = signup($conn, $username, $password);
     }
