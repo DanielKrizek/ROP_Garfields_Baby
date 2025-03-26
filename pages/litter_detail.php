@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo ucfirst(htmlspecialchars($litter['name'])); ?></title>
+    <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/Header.css">
     <link rel="stylesheet" href="../styles/navbar.css">

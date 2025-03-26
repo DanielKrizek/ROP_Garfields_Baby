@@ -42,3 +42,5 @@
         </div>
     </div>
 </div>
+<link rel="icon" type="image/x-icon" href="../svg/logo.svg">
+<link rel="stylesheet" href="../styles/global.css">

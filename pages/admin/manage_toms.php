@@ -15,6 +15,7 @@ $result = mysqli_query($conn, $query);
 <html>
 
 <head>
+    <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
     <title>Správa kocourů</title>
 </head>
 

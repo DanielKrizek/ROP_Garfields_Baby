@@ -2,6 +2,10 @@
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
+<head>
+    <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
+</head>
+
 <nav class="navbar">
     <div class="navbar-left">
         <span class="hamburger-btn material-symbols-rounded">menu</span>

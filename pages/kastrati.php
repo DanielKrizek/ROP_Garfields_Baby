@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo translate('view_castrates'); ?></title>
+    <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/Header.css">

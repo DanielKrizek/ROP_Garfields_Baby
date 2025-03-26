@@ -1,7 +1,8 @@
 body {
     color: #000000;
     margin: 0;
-    padding: 0;
+    padding: 0 !important; /* Forcefully override any global padding */
+    padding-top: 0 !important; /* Ensure no padding at the top */
 }
 
 .container {

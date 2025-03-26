@@ -67,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 
 <head>
+    <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
     <title>Přidat kocoura</title>
 </head>
 

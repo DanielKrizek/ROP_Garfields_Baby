@@ -75,28 +75,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<form method="POST" enctype="multipart/form-data">
-    <a href="manage_cats.php">Zpět na správu koček</a> <!-- Link back to manage_cats -->
-    <br><br>
-    <input type="text" name="name" value="<?= htmlspecialchars($row['name']) ?>" required><br>
-    <input type="date" name="birth_date" value="<?= $row['birth_date'] ?>" required><br>
-    <input type="text" name="color_pattern" value="<?= htmlspecialchars($row['color_pattern']) ?>" required><br>
-    <input type="text" name="color_code" value="<?= htmlspecialchars($row['color_code']) ?>" required><br>
-    <label for="main_image">Hlavní obrázek:</label>
-    <input type="file" id="main_image" name="main_image" accept="image/*">
-    <br>
-    <?php if ($row['main_image']): ?>
-        <img src="../../<?= htmlspecialchars($row['main_image']) ?>" alt="Hlavní obrázek" width="100">
-    <?php endif; ?>
-    <br>
-    <label for="gallery_images">Galerie obrázků:</label>
-    <input type="file" id="gallery_images" name="gallery_images[]" accept="image/*" multiple>
-    <br>
-    <?php if ($row['gallery_images']): ?>
-        <?php foreach (explode(",", $row['gallery_images']) as $gallery_image): ?>
-            <img src="../../<?= htmlspecialchars($gallery_image) ?>" alt="Galerie obrázek" width="50">
-        <?php endforeach; ?>
-    <?php endif; ?>
-    <br>
-    <button type="submit">Uložit změny</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
+    <title>Edit Kočka</title>
+</head>
+
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        <a href="manage_cats.php">Zpět na správu koček</a> <!-- Link back to manage_cats -->
+        <br><br>
+        <input type="text" name="name" value="<?= htmlspecialchars($row['name']) ?>" required><br>
+        <input type="date" name="birth_date" value="<?= $row['birth_date'] ?>" required><br>
+        <input type="text" name="color_pattern" value="<?= htmlspecialchars($row['color_pattern']) ?>" required><br>
+        <input type="text" name="color_code" value="<?= htmlspecialchars($row['color_code']) ?>" required><br>
+        <label for="main_image">Hlavní obrázek:</label>
+        <input type="file" id="main_image" name="main_image" accept="image/*">
+        <br>
+        <?php if ($row['main_image']): ?>
+            <img src="../../<?= htmlspecialchars($row['main_image']) ?>" alt="Hlavní obrázek" width="100">
+        <?php endif; ?>
+        <br>
+        <label for="gallery_images">Galerie obrázků:</label>
+        <input type="file" id="gallery_images" name="gallery_images[]" accept="image/*" multiple>
+        <br>
+        <?php if ($row['gallery_images']): ?>
+            <?php foreach (explode(",", $row['gallery_images']) as $gallery_image): ?>
+                <img src="../../<?= htmlspecialchars($gallery_image) ?>" alt="Galerie obrázek" width="50">
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <br>
+        <button type="submit">Uložit změny</button>
+    </form>
+</body>
+
+</html>

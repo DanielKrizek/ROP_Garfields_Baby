@@ -12,6 +12,7 @@ if ($_SESSION['role'] !== 'admin') {
 <html>
 
 <head>
+    <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
     <title>Admin Panel</title>
 </head>
 
