@@ -7,9 +7,8 @@ include("../php/functions.php");
 $conn = new mysqli("localhost", "root", "", "odchovy");
 
 if (isset($_GET['id'])) {
-    $litterId = intval($_GET['id']); // Získání ID vrhu z URL
+    $litterId = intval($_GET['id']);
 
-    // Načtení informací o vrhu
     $sqlLitter = "SELECT * FROM litters WHERE id = ?";
     $stmtLitter = $conn->prepare($sqlLitter);
     $stmtLitter->bind_param("i", $litterId);
@@ -22,7 +21,6 @@ if (isset($_GET['id'])) {
         die(translate('litter_not_found'));
     }
 
-    // Načtení koček pro daný vrh
     $sqlCats = "SELECT * FROM kotata WHERE litter_id = ?";
     $stmtCats = $conn->prepare($sqlCats);
     $stmtCats->bind_param("i", $litterId);
@@ -95,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 foreach ($cats as $cat) {
                     echo "<div class='cat'>";
                     echo "<h3>" . htmlspecialchars($cat['name']) . "</h3>";
-                    // Display description based on selected language
                     $descriptionField = ($_SESSION['lang'] === 'en') ? 'description_en' : 'description';
                     echo "<p><strong>" . translate('color') . ":</strong> " . htmlspecialchars($cat[$descriptionField]) . "</p>";
                     echo "<p><strong>" . translate('ems_code') . ":</strong> " . htmlspecialchars($cat['color_code']) . "</p>";
@@ -103,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         (strtolower($cat['status']) === 'volná' ? 'status-available' : 'status-unavailable') .
                         "'>" . htmlspecialchars($cat['status']) . "</span></p>";
 
-                    // Načtení obrázků pro dané kotě
                     $sqlImages = "SELECT * FROM kotata_obrazky WHERE kitten_id = ?";
                     $stmtImages = $conn->prepare($sqlImages);
                     $stmtImages->bind_param("i", $cat['id']);

@@ -19,7 +19,7 @@ $result = mysqli_query($conn, $query);
 </head>
 
 <body>
-    <a href="index.php">Zpět na admin panel</a> <!-- Link to the admin panel -->
+    <a href="index.php">Zpět na admin panel</a>
     <h1>Správa odchovů</h1>
     <a href="add_litter.php">Přidat odchov</a>
     <table border="1">

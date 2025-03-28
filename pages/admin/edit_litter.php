@@ -21,13 +21,11 @@ $litter = $result->fetch_assoc();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
 
-    // Handle file upload
     if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../../../img/odchovy/";
         $fileName = basename($_FILES['image_url']['name']);
         $targetFilePath = $uploadDir . $fileName;
 
-        // Ensure the upload directory exists
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
@@ -35,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (move_uploaded_file($_FILES['image_url']['tmp_name'], $targetFilePath)) {
             $image_url = "../img/odchovy/" . $fileName;
 
-            // Delete the old image file
             $oldFilePath = "../../" . $litter['image_url'];
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
@@ -44,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Chyba při nahrávání obrázku.");
         }
     } else {
-        $image_url = $litter['image_url']; // Keep the existing image if no new image is uploaded
+        $image_url = $litter['image_url'];
     }
 
     $query = "UPDATE litters SET name = ?, image_url = ? WHERE id = ?";
@@ -68,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <a href="manage_litters.php">Zpět na správu odchovů</a> <!-- Link back to manage_litters -->
+    <a href="manage_litters.php">Zpět na správu odchovů</a>
     <h1>Upravit odchov</h1>
     <form method="POST" enctype="multipart/form-data">
         <label for="name">Jméno:</label>

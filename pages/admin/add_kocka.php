@@ -15,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $color_pattern = $_POST['color_pattern'];
     $breed_code = $_POST['breed_code'];
 
-    // Handle main image upload
     if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../../../img/cats/";
         $fileName = basename($_FILES['main_image']['name']);
@@ -31,10 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Chyba při nahrávání hlavního obrázku.");
         }
     } else {
-        $main_image = null; // No main image uploaded
+        $main_image = null;
     }
 
-    // Handle gallery images upload
     $gallery_images = [];
     if (isset($_FILES['gallery_images']) && count($_FILES['gallery_images']['name']) > 0) {
         $uploadDir = "../../../img/cats/";
@@ -52,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $gallery_images_path = implode(",", $gallery_images); // Combine paths with commas
+    $gallery_images_path = implode(",", $gallery_images);
 
     $stmt = $conn->prepare("INSERT INTO cats (name, birth_date, color_pattern, breed_code, main_image, gallery_images) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss", $name, $birth_date, $color_pattern, $breed_code, $main_image, $gallery_images_path);
@@ -71,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <a href="manage_cats.php">Zpět na správu koček</a> <!-- Link back to manage_cats -->
+    <a href="manage_cats.php">Zpět na správu koček</a>
     <h1>Přidat kočku</h1>
     <form method="POST" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="Jméno" required><br>

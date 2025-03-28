@@ -1,10 +1,9 @@
-/* Hero sekce */
 .hero {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    width: calc(100% - 40px); /* Zajištění odstupu od okrajů */
+    width: calc(100% - 40px);
     max-width: 1200px;
     margin: 20px auto;
     padding: 15px;
@@ -37,7 +36,6 @@
     background-color: #ff6fba;
 }
 
-/* Info sekce */
 .info-section {
     display: flex;
     justify-content: center;
@@ -45,7 +43,7 @@
     flex-wrap: wrap;
     margin: 20px auto;
     max-width: 1200px;
-    width: calc(100% - 40px); /* Zajištění odstupu od okrajů */
+    width: calc(100% - 40px); 
 }
 
 .info-box {
@@ -80,10 +78,9 @@
     background: #ff6fba;
 }
 
-/* Text stylování */
 .description {
     max-width: 1200px;
-    width: calc(100% - 40px); /* Zajištění odstupu od okrajů */
+    width: calc(100% - 40px);
     margin: 20px auto;
     padding: 20px;
     background: #fff;
@@ -104,8 +101,7 @@
     line-height: 1.6;
 }
 
-/* Responzivita */
-@media (max-width: 1024px) { /* Tablet */
+@media (max-width: 1024px) { 
     .hero {
         max-width: 100%;
     }
@@ -114,12 +110,12 @@
         align-items: center;
     }
     .info-box {
-        width: 90%; /* Šířka stejná jako hero */
+        width: 90%;
         height: auto;
     }
 }
 
-@media (max-width: 768px) { /* Mobil */
+@media (max-width: 768px) { 
     .hero {
         min-height: 300px;
         height: auto;
@@ -138,9 +134,9 @@
     }
     
     .info-box {
-        width: 100%; /* Šířka jako hero */
-        height: auto; /* Přizpůsobení výšky */
-        min-height: 350px; /* Nastavení výšky na obdélník */
+        width: 100%; 
+        height: auto;
+        min-height: 350px;
     }
     .description {
         max-width: 95%;

@@ -17,7 +17,7 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 
 if ($stmt->execute()) {
-    header("Location: admin_panel.php");
+    header("Location: manage_litters.php");
     exit;
 } else {
     echo "Chyba při mazání odchovu: " . $conn->error;

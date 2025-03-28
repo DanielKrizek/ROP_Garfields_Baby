@@ -5,4 +5,4 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("navbar").innerHTML = data;
       })
       .catch(error => console.error("Chyba při načítání navigace:", error));
-  });
+});

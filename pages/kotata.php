@@ -1,9 +1,8 @@
 <?php
 session_start();
 
-// Nastavení výchozího jazyka, pokud není nastaven
 if (!isset($_SESSION['lang'])) {
-    $_SESSION['lang'] = 'cs'; // cs pro češtinu, en pro angličtinu
+    $_SESSION['lang'] = 'cs';
 }
 
 include("../php/connection.php");
@@ -15,7 +14,6 @@ $connUsers = new mysqli("localhost", "root", "", "login");
 $kotata = [];
 $defaultKotata = [];
 
-// Fetch all kittens with status "VOLNÁ" by default
 $stmt = $conn->prepare("
     SELECT k.id AS kitten_id, k.name, k.color_code, k.status, 
            " . ($_SESSION['lang'] == 'en' ? "k.description_en" : "k.description") . " AS description, 
@@ -40,12 +38,10 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Načtení vyhledávacího kritéria z URL, pokud existuje
 if (isset($_GET['search'])) {
     $_SESSION['search_color_code'] = $_GET['search'];
     $color_code = $_GET['search'];
 
-    // Proveďte vyhledávání
     $stmt = $conn->prepare("
         SELECT k.id AS kitten_id, k.name, k.color_code, k.status, 
                " . ($_SESSION['lang'] == 'en' ? "k.description_en" : "k.description") . " AS description, 
@@ -77,11 +73,11 @@ if (isset($_GET['search'])) {
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['search'])) {
         $color_code = $_POST['color_code'];
-        $_SESSION['search_color_code'] = $color_code; // Uložení do session
+        $_SESSION['search_color_code'] = $color_code;
         header("Location: " . $_SERVER['PHP_SELF'] . "?search=" . urlencode($color_code));
         exit();
     } elseif (isset($_POST['reset'])) {
-        unset($_SESSION['search_color_code']); // Smazání z session
+        unset($_SESSION['search_color_code']);
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     } elseif (isset($_POST['lang-select'])) {
@@ -102,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo translate('kitten_search_title'); ?></title>
+    <title>Garfields Baby</title>
     <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
     <link rel="stylesheet" href="../styles/global.css">
@@ -200,31 +196,37 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <div class="results">
-                <h2 class="vysledky"><?php echo translate('available_kittens'); ?></h2>
-                <?php foreach ($defaultKotata as $kitten): ?>
-                    <div class="kitten-box">
-                        <h3><?= htmlspecialchars($kitten['details']['name']) ?></h3>
-                        <p><strong><?php echo translate('ems_code'); ?>:</strong> <?= htmlspecialchars($kitten['details']['color_code']) ?></p>
-                        <p><strong><?php echo translate('color'); ?>:</strong> <?= htmlspecialchars($kitten['details']['description']) ?></p>
-                        <p>
-                            <strong><?php echo translate('status'); ?>:</strong>
-                            <span class="<?= $kitten['details']['status'] === 'VOLNÁ' ? 'status-green' : 'status-red' ?>">
-                                <?= htmlspecialchars($kitten['details']['status']) ?>
-                            </span>
-                        </p>
-                        <p><strong><?php echo translate('litter'); ?>:</strong> <?= htmlspecialchars($kitten['details']['litter_name']) ?></p>
-                        <p><strong><?php echo translate('batch_number'); ?>:</strong> <?= htmlspecialchars($kitten['details']['batch_number']) ?></p>
-                        <div class="kitten-images">
-                            <?php foreach ($kitten['images'] as $image_url): ?>
-                                <?php if (!empty($image_url)): ?>
-                                    <img src="<?= htmlspecialchars($image_url) ?>" alt="Obrázek koťátka" class="kitten-image enlargeable">
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+            <?php if (isset($_SESSION['search_color_code'])): ?>
+                <div class="results">
+                    <h2 class="vysledky"><?php echo translate('no_kittens_found'); ?>: <?= htmlspecialchars($_SESSION['search_color_code']) ?></h2>
+                </div>
+            <?php else: ?>
+                <div class="results">
+                    <h2 class="vysledky"><?php echo translate('available_kittens'); ?></h2>
+                    <?php foreach ($defaultKotata as $kitten): ?>
+                        <div class="kitten-box">
+                            <h3><?= htmlspecialchars($kitten['details']['name']) ?></h3>
+                            <p><strong><?php echo translate('ems_code'); ?>:</strong> <?= htmlspecialchars($kitten['details']['color_code']) ?></p>
+                            <p><strong><?php echo translate('color'); ?>:</strong> <?= htmlspecialchars($kitten['details']['description']) ?></p>
+                            <p>
+                                <strong><?php echo translate('status'); ?>:</strong>
+                                <span class="<?= $kitten['details']['status'] === 'VOLNÁ' ? 'status-green' : 'status-red' ?>">
+                                    <?= htmlspecialchars($kitten['details']['status']) ?>
+                                </span>
+                            </p>
+                            <p><strong><?php echo translate('litter'); ?>:</strong> <?= htmlspecialchars($kitten['details']['litter_name']) ?></p>
+                            <p><strong><?php echo translate('batch_number'); ?>:</strong> <?= htmlspecialchars($kitten['details']['batch_number']) ?></p>
+                            <div class="kitten-images">
+                                <?php foreach ($kitten['images'] as $image_url): ?>
+                                    <?php if (!empty($image_url)): ?>
+                                        <img src="<?= htmlspecialchars($image_url) ?>" alt="Obrázek koťátka" class="kitten-image enlargeable">
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </main>
 

@@ -1,8 +1,8 @@
 body {
     color: #000000;
     margin: 0;
-    padding: 0 !important; /* Forcefully override any global padding */
-    padding-top: 0 !important; /* Ensure no padding at the top */
+    padding: 0 !important; 
+    padding-top: 0 !important;
 }
 
 .container {
@@ -29,8 +29,8 @@ body {
     position: absolute;
     left: 0;
     right: 0;
-    height: 3px; /* Tloušťka čáry */
-    background-color: black; /* Barva čáry */
+    height: 3px; 
+    background-color: black; 
 }
 
 .container h2::before {
@@ -62,10 +62,23 @@ body {
     min-height: 130px;
     border-radius: 8px;
     margin-bottom: 0px;
+    object-fit: cover;
 }
 
-.litter h3 {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 10px;
+@media (max-width: 600px) {
+    .litter img {
+        min-width: 250px;
+        min-height: 150px;
+
+        max-width: 250px;
+        max-height: 150px;
+    }
+
+    .litter {
+        padding: 0px;
+    }
+
+    .litter h3 {
+        font-size: 16px;
+    }
 }

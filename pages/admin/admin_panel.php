@@ -7,7 +7,6 @@ if ($_SESSION['role'] !== 'admin') {
     die("Přístup zamítnut.");
 }
 
-// Check if the connection is successful
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -17,7 +16,6 @@ $connNews = new mysqli("localhost", "root", "", "news");
 $connUsers = new mysqli("localhost", "root", "", "login");
 $connOdchovy = new mysqli("localhost", "root", "", "odchovy");
 
-// Ensure the table name is correct
 $queryCastrates = "SELECT * FROM castrates";
 $resultCastrates = mysqli_query($conn, $queryCastrates);
 
@@ -106,13 +104,13 @@ if (!$resultCastrates || !$resultKocky || !$resultKocouri || !$resultClanky || !
     <table border="1">
         <tr>
             <th>Titulek</th>
-            <th>Datum</th> <!-- Added new column header for date -->
+            <th>Datum</th>
             <th>Akce</th>
         </tr>
         <?php while ($row = mysqli_fetch_assoc($resultClanky)): ?>
             <tr>
                 <td><?= htmlspecialchars($row['title']) ?></td>
-                <td><?= htmlspecialchars($row['created_at']) ?></td> <!-- Display article creation date -->
+                <td><?= htmlspecialchars($row['created_at']) ?></td>
                 <td>
                     <a href="edit_article.php?id=<?= $row['id'] ?>">Upravit</a>
                     <a href="delete_article.php?id=<?= $row['id'] ?>" onclick="return confirm('Opravdu chcete smazat?')">Smazat</a>

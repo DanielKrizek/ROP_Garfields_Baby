@@ -21,14 +21,14 @@
 .big-image {
     width: 100%;
     height: 250px;
-    background-color: #ccc; /* Dočasné pozadí */
+    background-color: #ccc;
     border-radius: 10px;
 }
 
 .big-image img{
     width: 100%;
     height: 250px;
-    background-color: #ccc; /* Dočasné pozadí */
+    background-color: #ccc; 
     border-radius: 10px;
 }
 
@@ -42,7 +42,7 @@
 .small-image {
     width: 90px;
     height: 90px;
-    background-color: #ddd; /* Dočasné pozadí */
+    background-color: #ddd;
     border-radius: 5px;
 }
 

@@ -58,7 +58,7 @@ a
 
 
 .contact-form .form-group:last-of-type {
-    margin-bottom: 10px; /* Adjust this value as needed */
+    margin-bottom: 10px; 
 }
 
 .contact-form {
@@ -70,7 +70,7 @@ a
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     width: 100%;
-    margin: 0 auto 40px auto; /* Add 40px margin below the form */
+    margin: 0 auto 40px auto; 
 }
 
 .contact-form h3 {
@@ -158,4 +158,49 @@ a
     font-size: 18px;
     color: #333;
     margin-bottom: 40px;
+}   ¨
+
+.social-icons {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.social-icon {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+.social-item a {
+    color: black;
+    text-decoration: underline;
+    text-align: center;
+    font-size: 16px;
+}
+
+.social-item a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .social-item a {
+        display: none;
+    }
 }

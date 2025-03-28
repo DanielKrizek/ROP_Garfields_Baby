@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                 <article class="news-item">
                     <?php
-                    // Zjištění jazyka a výběr příslušného titulku a obsahu
                     $title = ($_SESSION['lang'] == 'en') ? $row['title_en'] : $row['title'];
                     $content = ($_SESSION['lang'] == 'en') ? $row['content_en'] : $row['content'];
                     ?>

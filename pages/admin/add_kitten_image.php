@@ -8,20 +8,17 @@ if ($_SESSION['role'] !== 'admin') {
 
 $conn = new mysqli("localhost", "root", "", "odchovy");
 
-// Fetch kittens for the dropdown
 $kittensQuery = "SELECT id, name FROM kotata";
 $kittensResult = mysqli_query($conn, $kittensQuery);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kitten_id = $_POST['kitten_id'];
 
-    // Handle file upload
     if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../../uploads/kitten_images/";
         $fileName = basename($_FILES['image_url']['name']);
         $targetFilePath = $uploadDir . $fileName;
 
-        // Ensure the upload directory exists
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }

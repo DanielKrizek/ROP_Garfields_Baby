@@ -23,7 +23,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li><a id="navbar6" href="novinky.php" class="<?= ($current_page == 'novinky.php') ? 'active' : '' ?>"><?php echo translate('news'); ?></a></li>
             <li><a id="navbar7" href="kontakt.php" class="<?= ($current_page == 'kontakt.php') ? 'active' : '' ?>"><?php echo translate('contact'); ?></a></li>
 
-            <!-- Odkaz na admin panel (zobrazí se pouze adminům) -->
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                 <li><a id="navbar-admin" href="admin/index.php" class="<?= ($current_page == 'admin/admin_panel.php') ? 'active' : '' ?>">Admin</a></li>
             <?php endif; ?>

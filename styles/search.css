@@ -2,7 +2,8 @@ main {
     max-width: 900px;
     margin: 30px auto;
     padding: 20px;
-    background: #ffffff;
+    background: #ffffff !important;
+    margin-top: 60px !important;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -165,40 +166,40 @@ h1 {
 }
 
 .modal-contenter {
-    background-color: #ffffff; /* White background for content */
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     max-width: 600px;
     margin: auto;
-    overflow-y: auto; /* Enable scrolling for long content */
-    max-height: 80%; /* Limit height to fit within the viewport */
+    overflow-y: auto;
+    max-height: 80%; 
 }
 
 .modal-contenter h2, .modal-content h3 {
-    color: #333; /* Darker text for headings */
+    color: #333;
     margin-bottom: 15px;
 }
 
 .modal-contenter p {
-    color: #555; /* Slightly lighter text for paragraphs */
-    line-height: 1.6; /* Improve readability */
+    color: #555;
+    line-height: 1.6; 
     margin-bottom: 15px;
 }
 
 .modal-contenter ul {
-    list-style: none; /* Remove default list styling */
+    list-style: none;
     padding: 0;
     margin-bottom: 15px;
 }
 
 .modal-contenter ul li {
     margin-bottom: 10px;
-    color: #444; /* Consistent text color */
+    color: #444; 
 }
 
 .modal-contenter ul li strong {
-    color: #FF8DC7; /* Highlighted color for strong text */
+    color: #FF8DC7; 
 }
 
 

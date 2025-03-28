@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $content = $_POST['content'];
 
-    // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../../../img/news/";
         $fileName = basename($_FILES['image']['name']);
@@ -29,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Chyba při nahrávání obrázku.");
         }
     } else {
-        $image = null; // No image uploaded
+        $image = null;
     }
 
     $stmt = $conn->prepare("INSERT INTO news (title, content, image) VALUES (?, ?, ?)");
@@ -49,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <a href="manage_articles.php">Zpět na správu článků</a> <!-- Link back to manage_articles -->
+    <a href="manage_articles.php">Zpět na správu článků</a>
     <h1>Přidat článek</h1>
     <form method="POST" enctype="multipart/form-data">
         <input type="text" name="title" placeholder="Název" required><br>

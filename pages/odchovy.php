@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         foreach ($litters as $litter) {
             if ($litter['batch_number'] !== $currentBatch) {
                 if ($currentBatch !== null) {
-                    echo "</div>"; // Uzavření předchozí řady
+                    echo "</div>";
                 }
                 echo "<h2>{$litter['batch_number']}. " . translate('row_of_litters') . "</h2>";
                 echo "<div class='grid'>";
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         }
 
         if (!empty($litters)) {
-            echo "</div>"; // Uzavření poslední řady
+            echo "</div>";
         }
         ?>
     </div>

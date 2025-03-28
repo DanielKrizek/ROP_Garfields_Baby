@@ -11,7 +11,7 @@ function check_login($conn)
 
         if ($result && $result->num_rows > 0) {
             $user_data = $result->fetch_assoc();
-            $_SESSION['role'] = $user_data['role']; // Uložení role do session
+            $_SESSION['role'] = $user_data['role'];
             return $user_data;
         }
     }
@@ -20,24 +20,22 @@ function check_login($conn)
 
 function logout()
 {
-    // Preserve the language setting before clearing the session
     $lang = $_SESSION['lang'] ?? 'cz';
     session_unset();
     session_destroy();
     session_start();
-    $_SESSION['lang'] = $lang; // Restore the language setting
+    $_SESSION['lang'] = $lang;
 }
 
 function login($conn, $username, $password)
 {
-    // Validate username
     if (!preg_match('/^[a-zA-Z0-9._]+$/', $username)) {
         echo "<script>alert('" . htmlspecialchars('Uživatelské jméno může obsahovat pouze písmena, číslice, tečky a podtržítka.') . "');</script>";
         echo "<script>window.location.href = '" . htmlspecialchars($_SERVER['PHP_SELF']) . "';</script>";
         return;
     }
 
-    $username = htmlspecialchars($username); // Escape input
+    $username = htmlspecialchars($username);
     $query = "SELECT * FROM users WHERE username = ? LIMIT 1";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $username);
@@ -48,8 +46,8 @@ function login($conn, $username, $password)
         $user_data = $result->fetch_assoc();
         if (password_verify($password, $user_data['password'])) {
             $_SESSION['user_id'] = $user_data['user_id'];
-            $_SESSION['username'] = htmlspecialchars($user_data['username']); // Escape output
-            $_SESSION['role'] = htmlspecialchars($user_data['role']); // Escape output
+            $_SESSION['username'] = htmlspecialchars($user_data['username']);
+            $_SESSION['role'] = htmlspecialchars($user_data['role']);
 
             header("Location: " . htmlspecialchars($_SERVER['PHP_SELF']));
             die;
@@ -74,14 +72,13 @@ function signup($conn, $username, $password)
         return;
     }
 
-    // Validate username
     if (!preg_match('/^[a-zA-Z0-9._]+$/', $username)) {
         echo "<script>alert('" . htmlspecialchars('Uživatelské jméno může obsahovat pouze písmena, číslice, tečky a podtržítka.') . "');</script>";
         echo "<script>window.location.href = window.location.href;</script>";
         return;
     }
 
-    $username = htmlspecialchars($username); // Escape input
+    $username = htmlspecialchars($username);
     $query = "SELECT * FROM users WHERE username = ? LIMIT 1";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $username);
@@ -107,8 +104,8 @@ function signup($conn, $username, $password)
         if ($result && $result->num_rows > 0) {
             $user_data = $result->fetch_assoc();
             $_SESSION['user_id'] = $user_data['user_id'];
-            $_SESSION['username'] = htmlspecialchars($user_data['username']); // Escape output
-            $_SESSION['role'] = htmlspecialchars($user_data['role']); // Escape output
+            $_SESSION['username'] = htmlspecialchars($user_data['username']);
+            $_SESSION['role'] = htmlspecialchars($user_data['role']);
 
             echo "<script>window.location.href = '" . htmlspecialchars($_SERVER['PHP_SELF']) . "';</script>";
             return;
@@ -247,7 +244,7 @@ function translate($text)
             'litter_id_not_specified' => 'Litter ID was not specified.',
             'back_to_odchovy' => 'Zpět na odchovy',
             'row_of_litters' => 'řada vrhů',
-            // Add more translations as needed
+            'no_kittens_found' => 'Nebyly nalezeny žádná koťata s EMS kódem',
         ],
         'en' => [
             'welcome' => 'Welcome to our cattery website.',
@@ -361,7 +358,7 @@ function translate($text)
             'back_to_odchovy' => 'Back to Offspring',
             'row_of_litters' => 'batch of litters',
             'no_images_found' => 'No images found for this kitten.',
-            // Add more translations as needed
+            'no_kittens_found' => 'No kittens found with EMS code',
         ]
     ];
 

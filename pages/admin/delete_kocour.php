@@ -14,5 +14,5 @@ $stmt = $conn->prepare("DELETE FROM toms WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
-header("Location: admin_panel.php");
+header("Location: manage_toms.php");
 exit();

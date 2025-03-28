@@ -13,7 +13,6 @@ $connUsers = new mysqli("localhost", "root", "", "login");
 
 $user_id = $_SESSION['user_id'];
 
-// Získání aktuálních údajů o uživateli
 $stmt = $conn->prepare("SELECT username FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -29,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 
-// Zpracování formuláře
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_username = isset($_POST['username']) ? trim($_POST['username']) : '';
     $new_password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -37,14 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $errors = [];
 
-    // Validace jména
     if ($new_username === $username) {
         $errors[] = translate('error_username_same');
     } elseif (strlen($new_username) < 3) {
         $errors[] = translate('error_username_short');
     }
 
-    // Validace hesla
     if (!empty($new_password)) {
         if (strlen($new_password) < 6) {
             $errors[] = translate('error_password_short');
@@ -54,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Pokud nejsou chyby, aktualizujeme databázi
     if (empty($errors)) {
         if (!empty($new_password)) {
             $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);

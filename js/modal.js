@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const modal = document.getElementById("imageModal");
     const modalImg = document.getElementById("modalImage");
-    const closeBtn = modal.querySelector(".close"); // Ensure the close button is correctly selected
+    const closeBtn = modal.querySelector(".close");
 
     document.querySelectorAll(".enlargeable").forEach(img => {
         img.addEventListener("click", function() {
@@ -18,13 +18,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     closeBtn.addEventListener("click", function() {
         modal.style.display = "none";
-        panzoom(modalImg).dispose(); // Dispose panzoom instance when closing modal
+        panzoom(modalImg).dispose();
     });
 
     window.addEventListener("click", function(event) {
         if (event.target === modal) {
             modal.style.display = "none";
-            panzoom(modalImg).dispose(); // Dispose panzoom instance when closing modal
+            panzoom(modalImg).dispose();
         }
     });
 
@@ -52,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
             const searchInput = document.getElementById("color_code");
             const infoModal = document.getElementById("infoModal");
 
-            searchInput.value = color; // Set the color code in the search input
-            infoModal.style.display = "none"; // Close the modal
+            searchInput.value = color;
+            infoModal.style.display = "none";
         });
     });
 });

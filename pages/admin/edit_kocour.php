@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $color_pattern = $_POST['color_pattern'];
     $color_code = $_POST['color_code'];
 
-    // Handle main image upload
     if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../../../img/toms/";
         $fileName = basename($_FILES['main_image']['name']);
@@ -43,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $main_image = $row['main_image'];
     }
 
-    // Handle gallery images upload
     $gallery_images = [];
     if (isset($_FILES['gallery_images']) && count($_FILES['gallery_images']['name']) > 0) {
         $uploadDir = "../../../img/toms/";
@@ -61,9 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $gallery_images_path = implode(",", $gallery_images); // Combine paths with commas
+    $gallery_images_path = implode(",", $gallery_images);
     if (empty($gallery_images_path)) {
-        $gallery_images_path = $row['gallery_images']; // Keep existing paths if no new images are uploaded
+        $gallery_images_path = $row['gallery_images'];
     }
 
     $stmt = $conn->prepare("UPDATE toms SET name=?, birth_date=?, color_pattern=?, color_code=?, main_image=?, gallery_images=? WHERE id=?");
@@ -87,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <form method="POST" enctype="multipart/form-data">
-        <a href="manage_toms.php">Zpět na správu kocourů</a><br><br> <!-- Link back to kittens management -->
+        <a href="manage_toms.php">Zpět na správu kocourů</a><br><br>
         <input type="text" name="name" value="<?= htmlspecialchars($row['name']) ?>" required><br>
         <input type="date" name="birth_date" value="<?= $row['birth_date'] ?>" required><br>
         <input type="text" name="color_pattern" value="<?= htmlspecialchars($row['color_pattern']) ?>" required><br>

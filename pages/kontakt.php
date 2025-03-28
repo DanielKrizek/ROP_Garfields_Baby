@@ -56,6 +56,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <li><strong><?php echo translate('contact_phone'); ?></strong> 603 285 744</li>
                 <li><strong>Email:</strong> <a href="mailto:garfieldsbaby@seznam.cz">garfieldsbaby@seznam.cz</a></li>
             </ul>
+
+            <div class="social-icons">
+                <div class="social-item">
+                    <img src="../svg/instagram.jpg" alt="Instagram" class="social-icon">
+                    <a href="https://www.instagram.com/garfieldsbaby.cz/" target="_blank">https://www.instagram.com/garfieldsbaby.cz/</a>
+                </div>
+                <div class="social-item">
+                    <img src="../svg/facebook.png" alt="Facebook" class="social-icon">
+                    <a href="https://www.facebook.com/garfieldsbaby/" target="_blank">https://www.facebook.com/garfieldsbaby/</a>
+                </div>
+            </div>
+
             <div id="map" style="height: 400px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);"></div>
         </div>
     </main>

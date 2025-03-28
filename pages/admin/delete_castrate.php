@@ -14,5 +14,5 @@ $stmt = $conn->prepare("DELETE FROM castrates WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
-header("Location: admin_panel.php");
+header("Location: manage_castrates.php");
 exit();

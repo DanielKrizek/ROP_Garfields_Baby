@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } elseif (isset($_POST['lang-select'])) {
         $_SESSION['lang'] = $_POST['lang-select'];
     } elseif (isset($_POST['logout'])) {
-        logout(); // Use the updated logout function
+        logout();
     }
 }
 ?>

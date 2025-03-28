@@ -1,0 +1,11 @@
+Pro správné fungování celého projektu, je potřeba do složky nakopírovat obrázky z Google Disku.
+Tento způsob jsem musel zvolit proto, protože by byl celý .zip soubor větší než 50MB, což je maximální povolená velikost v odevzdavárně
+(.zip soubor s obrázky má 1GB)
+
+Postup:
+1. Otevřete si Google Disk s obrázky:
+https://drive.google.com/drive/folders/1XMz8RtWACp1P1DFaftudIuKnzWLZDu9S?usp=drive_link
+
+2. Zkopírujte celý obsah Google Disku a vložte ho do složky "img", která je ve složce celého projektu vytvořená
+
+3. Spusťte projekt a máte vše nahrané

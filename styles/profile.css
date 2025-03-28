@@ -52,7 +52,6 @@ body {
     background-color: #e55a8f;
 }
 
-/* Specifické ID pro chyby */
 #profile-errors {
     max-width: 400px;
     margin: 10px auto;
@@ -63,7 +62,6 @@ body {
     color: #a00;
 }
 
-/* Specifické ID pro zprávy */
 #profile-message {
     max-width: 400px;
     margin: 10px auto;
@@ -75,7 +73,6 @@ body {
     text-align: center;
 }
 
-/* Oprava zarovnání inputů */
 #profile-edit-form input {
     display: block;
     width: calc(100% - 16px);
@@ -90,6 +87,6 @@ body {
     border-radius: 5px;
     font-size: 14px;
     text-align: center;
-    display: none; /* Ensure it is hidden by default */
+    display: none; 
 }
 

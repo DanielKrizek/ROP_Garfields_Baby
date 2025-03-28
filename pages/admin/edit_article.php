@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = $_POST['title'];
     $content = $_POST['content'];
 
-    // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../../../img/news/";
         $fileName = basename($_FILES['image']['name']);
@@ -32,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
             $image = "../img/news/" . $fileName;
 
-            // Delete the old image file
             $oldFilePath = "../../" . $article['image'];
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
@@ -41,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Chyba při nahrávání obrázku.");
         }
     } else {
-        $image = $article['image']; // Keep the existing image if no new image is uploaded
+        $image = $article['image'];
     }
 
     $stmt = $conn->prepare("UPDATE news SET title = ?, content = ?, image = ? WHERE id = ?");
@@ -61,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <a href="manage_articles.php">Zpět na správu článků</a> <!-- Link back to manage_articles -->
+    <a href="manage_articles.php">Zpět na správu článků</a>
     <h1>Upravit článek</h1>
     <form method="POST" enctype="multipart/form-data">
         <input type="text" name="title" value="<?= htmlspecialchars($article['title']) ?>" required><br>

@@ -13,7 +13,6 @@ $connUsers = new mysqli("localhost", "root", "", "login");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
 
-    // Handle image upload
     if (isset($_FILES['image_url']) && $_FILES['image_url']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = "../../../img/odchovy/";
         $fileName = basename($_FILES['image_url']['name']);
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             die("Chyba při nahrávání obrázku.");
         }
     } else {
-        $image_url = null; // No image uploaded
+        $image_url = null;
     }
 
     $stmt = $conn->prepare("INSERT INTO litters (name, image_url) VALUES (?, ?)");
@@ -49,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <a href="manage_litters.php">Zpět na správu odchovů</a> <!-- Link back to manage_litters -->
+    <a href="manage_litters.php">Zpět na správu odchovů</a>
     <h1>Přidat odchov</h1>
     <form method="POST" enctype="multipart/form-data">
         <label for="name">Jméno:</label>

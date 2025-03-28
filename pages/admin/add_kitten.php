@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <a href="manage_kittens.php">Zpět na správu koťat</a> <!-- Link back to kittens management -->
+    <a href="manage_kittens.php">Zpět na správu koťat</a>
     <h1>Přidat kotě</h1>
     <form method="POST">
         <label for="name">Jméno:</label>

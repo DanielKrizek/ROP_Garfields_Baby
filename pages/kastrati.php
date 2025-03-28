@@ -1,5 +1,5 @@
 <?php
-session_start(); // Musí být úplně první
+session_start();
 
 include("../php/connection.php");
 include("../php/functions.php");
@@ -13,7 +13,6 @@ if ($connUsers->connect_error) {
     die("Chyba připojení: " . $connUsers->connect_error);
 }
 
-// Zpracování přihlášení, registrace a výběru jazyka
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['login'])) {
         $username = $_POST['username'];
@@ -35,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo translate('view_castrates'); ?></title>
+    <title>Garfields Baby</title>
     <link rel="icon" type="image/x-icon" href="../svg/logo.svg">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
     <link rel="stylesheet" href="../styles/global.css">
@@ -60,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <div class="blocks-row">
         <?php
-        // Dotaz na kočky z databáze
         $query = "
             SELECT name, main_image, gallery_images, birth_date, 
                    " . ($_SESSION['lang'] == 'en' ? "color_pattern_en" : "color_pattern") . " AS color_pattern, 
@@ -70,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $result = mysqli_query($conn, $query);
 
         while ($row = mysqli_fetch_assoc($result)) {
-            $images = explode(',', $row['gallery_images']); // Rozdělení obrázků na pole
+            $images = explode(',', $row['gallery_images']);
 
             echo '<div class="block">';
             echo '    <div class="big-image">';
@@ -89,10 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             echo '        ' . translate('mother') . ': ' . $row['mother'] . '<br>';
             echo '        ' . translate('father') . ': ' . $row['father'] . '<br>';
 
-            // Zobrazit výstavy, pokud existují
             if (!empty($row['exhibitions'])) {
                 echo '        <strong>' . translate('exhibitions') . ':</strong><br>';
-                echo '        ' . nl2br($row['exhibitions']) . '<br>'; // Použití nl2br pro zobrazení nových řádků
+                echo '        ' . nl2br($row['exhibitions']) . '<br>';
             }
 
             echo '    </div>';
